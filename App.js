@@ -9,7 +9,7 @@ import Splash from "./Components/NewSplash";
 // import Signup from "./components/Signup"; 
 
 import Home from "./Components/Home"
-import { createStackNavigator , createAppContainer , createBottomTabNavigator , createSwitchNavigator  } from "react-navigation";
+import { createStackNavigator , createAppContainer } from "react-navigation";
 import Welcome from "./Components/Welcome";
 // import NewLogin from "./components/NewLogin";
 // import Test from "./components/test";
@@ -27,7 +27,7 @@ import Customerdetails from "./Components/CustomerDetails";
   
     return (
    
-   <SwitchNavigator/>
+   <AppNavigator/>
     
     );
   }
@@ -56,7 +56,7 @@ const AppStackNavigator = createStackNavigator({
               header: null}
           },
           Home:{
-            screen:TabNavigator,
+            screen:Home,
             // navigationOptions: {
             //   header: null }
           },
@@ -74,5 +74,5 @@ const AppStackNavigator = createStackNavigator({
     }
 } )
 
-
-export default createAppContainer(AppStackNavigator)
+const AppNavigator = createAppContainer( AppStackNavigator)
+export default App
