@@ -1,117 +1,143 @@
 import * as React from 'react';
-import Modal from "./Modal"
-
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text , Input , Item , H3 , Spinner  } from 'native-base';
-import { FlatList } from "react-native"
-import { Image , Dimensions } from "react-native"
-
-
-import { View  , StyleSheet } from "react-native"
-import Productshow from "./productShow";
-import Customerdetails from "./CustomerDetails";
-import Placementdetails from "./PlacementDetails"
-import Search from "./Search";
+import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text , Input , Item , H3 , Spinner , InputGroup } from 'native-base';
+import { Image , Dimensions , View  , StyleSheet ,  FlatList} from "react-native"
 import Products from "./Products";
-import { encode } from "base-64";
+// import { encode } from "base-64";
+import axios from "axios";
+import { connect } from "react-redux"
+import { GET_PRODUCTS } from "../Actions/ProductsAction";
+import  { LOADING } from "../Actions/LoadingAction"
+import productMiddleware from "../Middleware/ProductMiddleware"
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   state = {
     data : [],
-    isLoading:false,
-    search:""
+    isLoading:true,
+    search:"",
+    serverError :""
   } 
 
-  fetchData = (  value ) => {
-    console.log(value)
-    this.setState(({ isLoading:true}))
-    const username = "ck_083aa754e82793e095856bf0ab682d699725def0"
-    const password  ="cs_0771387d4b8f5bcc2a41f6f20e3f966e57193b0a"
+  // 
   
-    fetch(
-      `https://www.fasteninghouseatlantic.com/wp-json/wc/v3/products?search=${value}`
-  
-      
-      
-      , {
-    headers:{
-      'Authorization':'Basic '+ encode(username + ":" + password),  
-       },
-    method:"GET" }).
-    then(( response ) =>  response.json()).
-    then(( data) =>   
-    
-    this.setState(({
-       data,
-       isLoading:false
-      
-      }))
-   
-      )
-
-  }
   _renderItem = ({item}) => {
   
     return( <Products
-      name  = { item.name}
-      regular_price = { item.regular_price}
-      sale_price = { item.sale_price}
+      productCode  = { item.productCode}
       description = { item.description} 
-      imageUri = { item }
-/>)
+    />)
 } 
+
+componentDidMount = () => {
+//   axios.get("http://13.59.64.244:3000/api/products?noOfRecords=10&skip=0").
+//   then(( response ) => {
+//    const { data } = response 
+//   this.setState(({ 
+//      data,
+//      isLoading:false,
+//   })) 
+// }) 
+//   .catch( err =>  this.setState (({ serverError : err.response.data })))
+//  this.props.dispatch(Loading_Action(true))
+// const { dispatch } = this.props;
+// productMiddleware( dispatch )
+// this.props.ProductFetch()
+    const { dispatch } = this.props   
+    console.log("dispatch" , dispatch )
+   productMiddleware( dispatch )
+}
   render() {
-     const { isLoading , data } = this.state
-    
-    return (
-      
-    
+     const { isLoading  } = this.props
+     const { data } = this.state
+
+     console.log( "isloading", isLoading  )
+    return ( 
     
     <Container>
-    <Header style = {{ backgroundColor:"#DA011D" , height:120 , width: Dimensions.get("window").width}}>
+          <Header style = {{ backgroundColor:"#DA011D" , height:120 , width: Dimensions.get("window").width}}>
 
-      <Body>
-        <Text style = {{ color:"white"  , fontWeight:"bold" , textAlign:"center"}}> 
-        Fastening House Atlantic </Text>
-        </Body>
-    </Header>
-    <Content>
-    <Item style = {{ marginTop:50}} >
-                   <Icon active name='ios-search' style = {{ marginLeft:25}}/> 
-                    <Input placeholder='Search Product'
-                     style = {{ marginLeft:15 , width:80}}
-                     value = { this.state.search}
-                     onChangeText = { ( search ) => this.setState(({search})) }
-                     onSubmitEditing = {() => this.fetchData()}
-                    />
-                    <Button onPress = { () => this.fetchData}  Title = "Go"/>
-                   </Item>
-        <View>
-       
-       { isLoading ? <Spinner color='red' />  : <FlatList
-         data = { data  }
-      
-        renderItem = { this._renderItem}
-      
-      />}
-      </View>
-    </Content>
-    <Productshow/>
-  </Container>
+            <Body>
+              <Text style = {{ color:"white"  , fontWeight:"bold" , textAlign:"center"}}> 
+              Fastening House Atlantic </Text>
+
+
+              </Body>
+          </Header>
+          <Content>
+             {/* <Item style = {{ marginTop:50}} >
+                        <Icon active name='ios-search' style = {{ marginLeft:25}}/> 
+                          <Input placeholder='Search Product'
+                          style = {{ marginLeft:15 , width:80}}
+                          value = { this.state.search}
+                          onChangeText = { ( search ) => 
+                            this.setState(({search})) 
+                            // this.fetchData()
+                          }
+                          onSubmitEditing = {() => this.fetchData()}
+                          />
+                          <Button onPress = { () => this.fetchData}  Title = "Go"/>
+
+            </Item> */}
+
+              <View>
+          
+              
+            { 
+              isLoading ? <Spinner color='red' />  : 
+          
+              <FlatList
+              data={ data}
+              ItemSeparatorComponent={() => <View style={{ marginBottom:-450 }} />}
+              renderItem={ this._renderItem} />
+
+              }
+          
+            </View>
+          </Content>
+    </Container>
     );
   }
 
 }
 
+const mapStateToProps = ( state ) => {
+  console.log( state )
+  return ({
+    isloading: state.Loading 
+  })
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'white',
+export default connect(mapStateToProps , null  )(Home)
+
+
+// fetch from the woo commerce API
+// fetchData = (  ) => {
+  //   const { search } = this.state
+  //   this.setState(({ isLoading:true}))
+  //   const username = "ck_083aa754e82793e095856bf0ab682d699725def0"
+  //   const password  ="cs_0771387d4b8f5bcc2a41f6f20e3f966e57193b0a"
+  
+  //   fetch(
+  //     `https://www.fasteninghouseatlantic.com/wp-json/wc/v3/products?search=${search}`
+  
+      
+      
+  //     , {
+  //   headers:{
+  //     'Authorization':'Basic '+ encode(username + ":" + password),  
+  //      },
+  //   method:"GET" }).
+  //   then(( response ) =>  response.json()).
+  //   then(( data) =>   
+    
+  //   this.setState(({
+  //      data,
+  //      isLoading:false
+      
+  //     }))
    
-  }
-});
+  //     )
 
+  // }
 
 // <Container>
 

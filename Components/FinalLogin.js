@@ -1,60 +1,33 @@
-import * as React from 'react';
+import  React , {Component} from 'react';
 import { Text, View, StyleSheet, ImageBackground , Image  , TextInput , TouchableOpacity , CheckBox } from 'react-native';
 import {EvilIcons ,AntDesign} from "@expo/vector-icons";
-import validation from '../helper/validation';
-export default class Finalogin extends React.Component {
+import validation_functions from "../utils/validation_functions";
+import { connect } from "react-redux";
 
-  state = {
-    email:"",
-    password:"",
-    checked:false
-  }
+// import Loading from "../Redux/Actions/LoadingAction"
 
-
-check_credentials = ( ) => {
-    const { email , password } = this.state
-     if( email === "Admin123@gmail.com" && password === "1234") {
-        return true
-     } 
-     return false
-  }
-  resetState = () => {
-   this.setState(({
+ class Finalogin extends Component {
+  constructor (props){
+    super(props)
+    this.state = {
       email:"",
       password:"",
-      credential_error_msg:"",
-      error:{}
-    }))
-  console.log("reseting the app")
- }
+      checked:false
+    }
+  }
+ 
 
- resetError = ( name ,  field ) => {
-   console.log( "name " , name , "field" , field )
- this.setState(({
-  [name]:field,
-  error:{},
-  credential_error_msg:""
- }))
- }
 
-   handleLoginSubmit = () => {
-     const { email , password  } = this.state
-      const data = { email , password}
-      const error =  validation(data)
-      if( Object.keys(error).length  ) {
-         console.log( error )
-        return this.setState(({ error }))
-      }
 
-    if( this.check_credentials() ) {
-       console.log("after checking credentials", this.check_credentials())
-             this.resetState()
-            this.props.navigation.navigate("Home")        
-            return 
-    } 
-   else {
-     return this.setState(({ credential_error_msg : " credential error "}))
-   }
+   handleSubmit = () => {
+
+     
+  // console.log("validity")
+  //  const status =  validation_functions.isFormValid()
+  //  console.log( "status",status )
+  //   // return ( status ? this.setState(({ validity:true })): null)
+    
+  this.props.navigation.navigate("Home")  
   }
 
 
@@ -62,9 +35,21 @@ check_credentials = ( ) => {
   navigateToLogin = () => {
     this.props.navigation.navigate("Finalsignup")
   }
-  render() {
 
-    const {  email , password , checked  , error , credential_error_msg } = this.state
+  handleInputChange = ( fieldName , value) => {
+    this.setState(({ [fieldName] : value}))
+    validation_functions.updateValidators( fieldName , value )
+
+  }
+
+  callRedux  = () => {
+    // const { dispatch } = this.props
+    // dispatch(Loading(true))
+
+  }
+    render() {
+  
+    const {  email , password , checked  , error , credential_error_msg  , validity} = this.state
   
     return(<View style  = { styles.mainContainer}>
 
@@ -89,14 +74,15 @@ check_credentials = ( ) => {
                      <TextInput  style ={styles.text}
                      placeholder={'Email address'}
                   placeholderTextColor={'#707070'}
-                   onChangeText = {( email ) => this.resetError("email" , email)}
+                   onChangeText = {( email ) => this.handleInputChange("email" , email)}
                   value = {email}
                 
                      />
               </View>
 
           </View>
-           {  error && error.email ? alert(`${ error.email}`) : null}
+           
+           { validation_functions.displayValidationErrors("email")}
            <View style = {styles.fieldMainContainer}> 
                <Text>Password:</Text>
                 <View style = {styles.fields}>
@@ -104,15 +90,21 @@ check_credentials = ( ) => {
                      <TextInput  style ={styles.text}
                      placeholder={'password'}
                   placeholderTextColor={'#707070'}
-                   onChangeText = {( password ) => this.resetError("password" , password )}
+                   onChangeText = {( password ) => this.handleInputChange("password" , password )}
                   value = { password }
                   secureTextEntry = {true}
                      />
               </View>
           </View>
-             {  error && error.password ? alert(`${ error.password}`) : null}
+          { validation_functions.displayValidationErrors("password")}
+            
+
           <View style = {styles.buttonContainer}>
-           <TouchableOpacity  style = {[ styles.button  , styles.login ]}   onPress = { this.handleLoginSubmit } >
+           <TouchableOpacity  style = {[ styles.button  , styles.login ]}  
+            // onPress = { this.handleSubmit } 
+            //  disabled = { validity ? false : true}
+            onPress = { this.handleSubmit}
+             >
                <Text style = {styles.login_text}> Log in</Text>
           </TouchableOpacity>
        </View>
@@ -132,7 +124,7 @@ check_credentials = ( ) => {
          </View>
        </View>
 
-       {  credential_error_msg? alert(`${credential_error_msg}`) : null}
+       
 
         <View style={ styles.tag}>
          <Text style = {{ color:"#707070"}}> New User?</Text>
@@ -148,7 +140,19 @@ check_credentials = ( ) => {
     
     </View>)
   }
+
+ 
+  
+
+  
 }
+
+// export default connect(mapStateToProps , null )(Finalogin)
+
+export default Finalogin 
+
+
+
 
 const styles = StyleSheet.create({
    mainContainer:{

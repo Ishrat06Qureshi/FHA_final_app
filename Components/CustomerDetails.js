@@ -1,7 +1,7 @@
 import * as React from "react";
 import { View , Text } from "react-native";
 import { Container , Header  , Content, Form , Item , Label , Input, Button  } from "native-base"
-import  loginValidation from '../helper/signupValidation';
+
 
 export default class Customerdetails  extends React.Component {
     state = {
