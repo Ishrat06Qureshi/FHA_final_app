@@ -15,7 +15,7 @@ const TabBar = createBottomTabNavigator(
             <AntDesign name='home' size={25} color={tintColor} /> )})
             },
             Search:{ 
-            screen : Search , 
+            screen : Search, 
             navigationOptions : () => ({  tabBarIcon: ({tintColor}) => (
                 <AntDesign name='search1' size={25} color={tintColor} /> )})
             },

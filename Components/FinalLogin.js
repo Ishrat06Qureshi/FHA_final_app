@@ -2,6 +2,7 @@ import  React , {Component} from 'react';
 import { Text, View, StyleSheet, ImageBackground , Image  , TextInput , TouchableOpacity , CheckBox } from 'react-native';
 import {EvilIcons ,AntDesign} from "@expo/vector-icons";
 import validation_functions from "../utils/validation_functions";
+import LoginMiddleware from "../Middleware/LoginMiddleware";
 import { connect } from "react-redux";
 
 // import Loading from "../Redux/Actions/LoadingAction"
@@ -27,7 +28,22 @@ import { connect } from "react-redux";
   //  console.log( "status",status )
   //   // return ( status ? this.setState(({ validity:true })): null)
     
-  this.props.navigation.navigate("Home")  
+  // this.props.navigation.navigate("Home")  
+  // const { email,password } = this.state
+  // const data = {
+  // email,
+  // password
+  // }
+  // this.props.Login( data )
+  // const status = validation_functions.isFormValid()
+  // console.log("status", status )
+
+     const validEmail = validation_functions.showError("email")
+     const validPassword = validation_functions.showError("password")
+     const formValidity = validation_functions.isFormValid(["email" , "password"])
+     console.log("Email validity" , validEmail)
+     console.log("password validity" , validPassword)
+     console.log("form validity" , formValidity)
   }
 
 
@@ -47,10 +63,18 @@ import { connect } from "react-redux";
     // dispatch(Loading(true))
 
   }
+  
+  // componentWillReceiveProps( nextProps ) {
+  //   console.log("next Props", nextProps )
+  // }
+
+
+
     render() {
   
     const {  email , password , checked  , error , credential_error_msg  , validity} = this.state
-  
+    const { token } = this.props
+    console.log("token" , token )
     return(<View style  = { styles.mainContainer}>
 
       <View style = { styles.imageContainer}>
@@ -100,11 +124,8 @@ import { connect } from "react-redux";
             
 
           <View style = {styles.buttonContainer}>
-           <TouchableOpacity  style = {[ styles.button  , styles.login ]}  
-            // onPress = { this.handleSubmit } 
-            //  disabled = { validity ? false : true}
-            onPress = { this.handleSubmit}
-             >
+           <TouchableOpacity  style = {[ styles.button  , styles.login ]} 
+            onPress = { this.handleSubmit }>
                <Text style = {styles.login_text}> Log in</Text>
           </TouchableOpacity>
        </View>
@@ -139,17 +160,25 @@ import { connect } from "react-redux";
 
     
     </View>)
-  }
-
- 
-  
-
-  
+  } 
 }
 
-// export default connect(mapStateToProps , null )(Finalogin)
 
-export default Finalogin 
+const mapDispatchToProps = ( dispatch ) => {
+   return({
+     Login:( data ) => dispatch(LoginMiddleware(data )) 
+   })
+}
+
+const mapStateToProps = ( state ) => {
+  console.log("state" , state )
+  return({
+    token: state.tokenReducer.token
+  })
+}
+export default connect(mapStateToProps , mapDispatchToProps )(Finalogin)
+
+// export default Finalogin 
 
 
 

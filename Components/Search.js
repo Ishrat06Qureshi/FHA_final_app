@@ -5,17 +5,18 @@ import { Container , Header  , Content, Form , Item , Label , Input, Button , Pi
 
 export default class Search extends React.Component {
     render() {
-        return( <Container>
-                 <Content>
-                   <Item style = {{ marginTop:50}} >
-                   <Icon active name='search' style = {{ marginLeft:25}}/> 
-                    <Input placeholder='Search Product' style = {{ marginLeft:15 , width:80}}/>
-                   </Item>
+        // return( <Container>
+        //          <Content>
+        //            <Item style = {{ marginTop:50}} >
+        //            <Icon active name='search' style = {{ marginLeft:25}}/> 
+        //             <Input placeholder='Search Product' style = {{ marginLeft:15 , width:80}}/>
+        //            </Item>
 
-                 </Content>
+        //          </Content>
              
                
 
-        </Container>)
+        // </Container>)
+        
     }
 }

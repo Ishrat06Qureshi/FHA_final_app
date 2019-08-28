@@ -8,48 +8,65 @@ import { connect } from "react-redux"
 import { GET_PRODUCTS } from "../Actions/ProductsAction";
 import  { LOADING } from "../Actions/LoadingAction"
 import productMiddleware from "../Middleware/ProductMiddleware"
+import LoadingAction from "../Actions/LoadingAction"
+
+
+
 
 class Home extends React.Component {
   state = {
     data : [],
     isLoading:true,
-    search:"",
-    serverError :""
+    search:"",    
+    serverError :"",
+    skippedProducts:0,
+    loadingMore:false, 
+    dataLength:0
   } 
 
   // 
   
-  _renderItem = ({item}) => {
+
+  fetchData = () => {
+    const { skippedProducts   } = this.state 
+    console.log("skipped products " , skippedProducts )
+    axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=50&skip=${skippedProducts}`).
+    then(( response ) => {
+     const { data } = response 
+     console.log( "data"  , data.length)
+      this.setState(( preState ) => {
+        return( {
+          dataLength:preState.dataLength+data.length,
+          data:[...preState.data ,...data],
+          isLoading:false,
+          skippedProducts:preState.skippedProducts  + 50,
+        })
+      })
+  }).catch( err =>  this.setState (({ serverError : err.response.data })))
+  }
+  
+   _renderItem = ({item}) => {
   
     return( <Products
       productCode  = { item.productCode}
       description = { item.description} 
     />)
-} 
+}
+  
 
 componentDidMount = () => {
-//   axios.get("http://13.59.64.244:3000/api/products?noOfRecords=10&skip=0").
-//   then(( response ) => {
-//    const { data } = response 
-//   this.setState(({ 
-//      data,
-//      isLoading:false,
-//   })) 
-// }) 
-//   .catch( err =>  this.setState (({ serverError : err.response.data })))
-//  this.props.dispatch(Loading_Action(true))
-// const { dispatch } = this.props;
-// productMiddleware( dispatch )
-// this.props.ProductFetch()
-    const { dispatch } = this.props   
-    console.log("dispatch" , dispatch )
-   productMiddleware( dispatch )
-}
-  render() {
-     const { isLoading  } = this.props
-     const { data } = this.state
 
-     console.log( "isloading", isLoading  )
+  this.props.LoadingOff()
+}
+componentWillReceiveProps ( nextProps ) {
+ console.log("nextProps" , nextProps )
+} 
+  render() {
+     
+     const {isLoading, data, dataLength   } = this.state
+     const { loadingState } = this.props
+
+     console.log("loading  state " , loadingState )
     return ( 
     
     <Container>
@@ -84,10 +101,18 @@ componentDidMount = () => {
             { 
               isLoading ? <Spinner color='red' />  : 
           
-              <FlatList
+               (
+               <View>
+                  <FlatList
               data={ data}
               ItemSeparatorComponent={() => <View style={{ marginBottom:-450 }} />}
-              renderItem={ this._renderItem} />
+              renderItem={ this._renderItem}
+              onEndReached = { this.fetchData() }
+              // onEndReachedThreshold =  { 0.5 } 
+               />  
+               {/* { loadingMore ? <Spinner color = "red"/> : null } */}
+               <Text> { dataLength}</Text>
+               </View> )
 
               }
           
@@ -102,11 +127,18 @@ componentDidMount = () => {
 const mapStateToProps = ( state ) => {
   console.log( state )
   return ({
-    isloading: state.Loading 
+    loadingState: state.loadingReducer.loadingState
   })
 }
 
-export default connect(mapStateToProps , null  )(Home)
+  const mapDispatchToProps  = ( dispatch ) => {
+    return({
+      LoadingOn: () => { dispatch(LoadingAction.LOADING_ON_ACTION( true ))},
+      LoadingOff: () => { dispatch(LoadingAction.LOADING_OFF_ACTION( false ))}
+    })
+  }
+
+export default connect(mapStateToProps , mapDispatchToProps  )(Home)
 
 
 // fetch from the woo commerce API

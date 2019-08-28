@@ -12,6 +12,7 @@ const  resetValidators = () => {
   
 
   const updateValidators = (fieldName, value) => {
+    console.log("fielName", fieldName , "value" , value)
     validators[fieldName].errors = [];
     validators[fieldName].state = value;
     validators[fieldName].valid = true;
@@ -28,6 +29,7 @@ const  resetValidators = () => {
         }
       }
     });
+   
   }
 
 
@@ -40,23 +42,35 @@ const  resetValidators = () => {
        </Text>)
   }
 
- const  isFormValid = () => {
+ const  isFormValid = ( fieldNames  ) => {
+   console.log("fieldNames" , fieldNames)
+   console.log("function gets called")
     let status = true;
     Object.keys(validators).forEach((field) => {
-      if (!validators[field].valid) {
-
-        console.log(validators[field].valid)
+      console.log("field", field)
+       if (field in fieldNames )
+       {
+         console.log("validity of field name ",validators[field].valid)
+        
+       } 
+       if (!validators[field].valid) { 
         status = false;
-      }
+      }  
     });
-    return status;
+    return status; 
+  }
+
+
+  const showError = ( fieldName ) => {
+    return  validators[fieldName].valid
   }
 
   const validation_functions = {
       resetValidators,
       updateValidators,
       displayValidationErrors,
-      isFormValid
+      isFormValid,
+      showError
   }
 
   export default validation_functions
