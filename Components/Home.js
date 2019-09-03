@@ -30,7 +30,7 @@ class Home extends React.Component {
   fetchData = () => {
     const { skippedProducts   } = this.state 
     console.log("skipped products " , skippedProducts )
-    axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=50&skip=${skippedProducts}`).
+    axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=10&skip=${skippedProducts}`).
     then(( response ) => {
      const { data } = response 
      console.log( "data"  , data.length)
@@ -39,7 +39,7 @@ class Home extends React.Component {
           dataLength:preState.dataLength+data.length,
           data:[...preState.data ,...data],
           isLoading:false,
-          skippedProducts:preState.skippedProducts  + 50,
+          skippedProducts:preState.skippedProducts  + 10,
         })
       })
   }).catch( err =>  this.setState (({ serverError : err.response.data })))
@@ -56,7 +56,7 @@ class Home extends React.Component {
 
 componentDidMount = () => {
 
-  this.props.LoadingOff()
+  this.fetchData()
 }
 componentWillReceiveProps ( nextProps ) {
  console.log("nextProps" , nextProps )

@@ -13,7 +13,7 @@ import { connect } from "react-redux";
     this.state = {
       email:"",
       password:"",
-      checked:false
+      notValidate:true
     }
   }
  
@@ -72,7 +72,7 @@ import { connect } from "react-redux";
 
     render() {
   
-    const {  email , password , checked  , error , credential_error_msg  , validity} = this.state
+    const {  email , password , checked  , error , credential_error_msg  , validity , notValidate} = this.state
     const { token } = this.props
     console.log("token" , token )
     return(<View style  = { styles.mainContainer}>
@@ -125,7 +125,9 @@ import { connect } from "react-redux";
 
           <View style = {styles.buttonContainer}>
            <TouchableOpacity  style = {[ styles.button  , styles.login ]} 
-            onPress = { this.handleSubmit }>
+            onPress = { this.handleSubmit }
+            
+            >
                <Text style = {styles.login_text}> Log in</Text>
           </TouchableOpacity>
        </View>

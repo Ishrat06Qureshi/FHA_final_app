@@ -43,19 +43,17 @@ const  resetValidators = () => {
   }
 
  const  isFormValid = ( fieldNames  ) => {
-   console.log("fieldNames" , fieldNames)
-   console.log("function gets called")
+  
     let status = true;
     Object.keys(validators).forEach((field) => {
       console.log("field", field)
-       if (field in fieldNames )
+       if (fieldNames.includes(field) )
        {
-         console.log("validity of field name ",validators[field].valid)
-        
-       } 
-       if (!validators[field].valid) { 
-        status = false;
-      }  
+            if (!validators[field].valid) { 
+              status = false;
+            } 
+            
+       }       
     });
     return status; 
   }
