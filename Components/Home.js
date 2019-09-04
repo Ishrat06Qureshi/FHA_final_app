@@ -8,29 +8,38 @@ import { connect } from "react-redux"
 import { GET_PRODUCTS } from "../Actions/ProductsAction";
 import  { LOADING } from "../Actions/LoadingAction"
 import productMiddleware from "../Middleware/ProductMiddleware"
-import LoadingAction from "../Actions/LoadingAction"
+import LoadingAction from "../Actions/LoadingAction";
+import { withNavigation } from "react-navigation"
+import ThreeAxisSensor from 'expo-sensors/build/ThreeAxisSensor';
 
-
+let TabActive = true 
 
 
 class Home extends React.Component {
-  state = {
-    data : [],
-    isLoading:true,
-    search:"",    
-    serverError :"",
-    skippedProducts:0,
-    loadingMore:false, 
-    dataLength:0
-  } 
+  constructor ( props ) {
+  super( props )
+  this.onEndReachedCalledDuringMomentum = true
+      this.state = {
+        data : [],
+        isLoading:true,
+        search:"",    
+        serverError :"",
+        skippedProducts:0,
+        loadingMore:false, 
+        dataLength:0,
+        activeTab : true 
+      }
+  }
+
+  
 
   // 
   
 
   fetchData = () => {
     const { skippedProducts   } = this.state 
-    console.log("skipped products " , skippedProducts )
-    axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=10&skip=${skippedProducts}`).
+    console.log("end reached")
+    axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=10&skip=${skippedProducts}&search=0`).
     then(( response ) => {
      const { data } = response 
      console.log( "data"  , data.length)
@@ -54,19 +63,49 @@ class Home extends React.Component {
 }
   
 
-componentDidMount = () => {
 
-  this.fetchData()
-}
+
+  componentDidMount() {
+    const { navigation } = this.props;
+    this.focusListener = navigation.addListener('didFocus', () => {
+    //   console.log("component did Mount")
+      // this.fetchData()
+      //  axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=10&skip=0`).then(( response ) => {
+      //    const { data } =  response
+      //    this.setState(({
+      //      data,
+      //      isLoading:false
+      //    }))
+      //  })
+   this.setState(({ activeTab: true }))
+      
+    });
+
+     
+    
+    
+    
+  }
+
+   didBlurSubscription = this.props.navigation.addListener(
+    'didBlur', () => this.setState(({  activeTab:false }))
+  );
+  
+  // Remove the listener when you are done
+
+
+  componentWillUnmount () {
+    didBlurSubscription.remove();
+  }
 componentWillReceiveProps ( nextProps ) {
  console.log("nextProps" , nextProps )
 } 
   render() {
      
-     const {isLoading, data, dataLength   } = this.state
+     const {isLoading, data, dataLength , activeTab   } = this.state
      const { loadingState } = this.props
 
-     console.log("loading  state " , loadingState )
+     console.log("Tab status", activeTab )
     return ( 
     
     <Container>
@@ -80,20 +119,7 @@ componentWillReceiveProps ( nextProps ) {
               </Body>
           </Header>
           <Content>
-             {/* <Item style = {{ marginTop:50}} >
-                        <Icon active name='ios-search' style = {{ marginLeft:25}}/> 
-                          <Input placeholder='Search Product'
-                          style = {{ marginLeft:15 , width:80}}
-                          value = { this.state.search}
-                          onChangeText = { ( search ) => 
-                            this.setState(({search})) 
-                            // this.fetchData()
-                          }
-                          onSubmitEditing = {() => this.fetchData()}
-                          />
-                          <Button onPress = { () => this.fetchData}  Title = "Go"/>
-
-            </Item> */}
+          
 
               <View>
           
@@ -104,11 +130,16 @@ componentWillReceiveProps ( nextProps ) {
                (
                <View>
                   <FlatList
-              data={ data}
-              ItemSeparatorComponent={() => <View style={{ marginBottom:-450 }} />}
-              renderItem={ this._renderItem}
-              onEndReached = { this.fetchData() }
-              // onEndReachedThreshold =  { 0.5 } 
+                      data={ data}
+                      ItemSeparatorComponent={() => <View style={{ marginBottom:-450 }} />}
+                      renderItem={ this._renderItem}
+                      onEndReached = {()=> 
+                        this.fetchData()
+                       }
+                      initialNumToRender={8}
+                      maxToRenderPerBatch={2}
+                      onEndReachedThreshold={0.01}
+                      
                />  
                {/* { loadingMore ? <Spinner color = "red"/> : null } */}
                <Text> { dataLength}</Text>
@@ -138,7 +169,7 @@ const mapStateToProps = ( state ) => {
     })
   }
 
-export default connect(mapStateToProps , mapDispatchToProps  )(Home)
+export default withNavigation(connect(mapStateToProps , mapDispatchToProps  )(Home))
 
 
 // fetch from the woo commerce API
