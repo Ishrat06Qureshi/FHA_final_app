@@ -17,42 +17,67 @@ let TabActive = true
 
 class Home extends React.Component {
   constructor ( props ) {
-  super( props )
-  this.onEndReachedCalledDuringMomentum = true
-      this.state = {
-        data : [],
-        isLoading:true,
-        search:"",    
-        serverError :"",
-        skippedProducts:0,
-        loadingMore:false, 
-        dataLength:0,
-        activeTab : true 
-      }
-  }
+    super( props )
+    this.onEndReachedCalledDuringMomentum = true
+        this.state = {
+          data : [],
+          isLoading:true,
+          search:"",    
+          serverError :"",
+          skippedProducts:0,
+          loadingMore:false, 
+          dataLength:0,
+          activeTab : true 
+        }
+    }
+  
 
   
 
   // 
   
-
   fetchData = () => {
-    const { skippedProducts   } = this.state 
-    console.log("end reached")
+    const { skippedProducts } = this.state
+
     axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=10&skip=${skippedProducts}&search=0`).
-    then(( response ) => {
-     const { data } = response 
-     console.log( "data"  , data.length)
-      this.setState(( preState ) => {
-        return( {
-          dataLength:preState.dataLength+data.length,
-          data:[...preState.data ,...data],
-          isLoading:false,
-          skippedProducts:preState.skippedProducts  + 10,
-        })
+    then(( response)  =>  this.setState( ( preState ) => {
+      return({
+        data:skippedProducts === 0 ? Array.from(response.data) : [...preState.data , ...response.data ],
+        isLoading : false
       })
-  }).catch( err =>  this.setState (({ serverError : err.response.data })))
+    })).catch ( err=> this.setState(({ serverError:err , isLoading:false })))
   }
+
+
+  _handleLoadMore = () => {
+    this.setState(
+      (prevState, nextProps) => ({
+        skippedProducts: prevState.skippedProducts + 10,
+        loadingMore: true
+      }),
+      () => {
+        this.fetchData();
+      }
+    );
+  };
+
+  // fetchData = () => {
+  //   const { skippedProducts   } = this.state 
+  //   console.log("end reached")
+  //   axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=10&skip=${skippedProducts}&search=0`).
+  //   then(( response ) => {
+  //    const { data } = response 
+  //    console.log( "data"  , data.length)
+  //     this.setState(( preState ) => {
+  //       return( {
+  //         dataLength:preState.dataLength+data.length,
+  //         data:[...preState.data ,...data],
+  //         isLoading:false,
+  //         skippedProducts:preState.skippedProducts  + 10,
+  //       })
+  //     })
+  // }).catch( err =>  this.setState (({ serverError : err.response.data })))
+  // }
   
    _renderItem = ({item}) => {
   
@@ -61,27 +86,32 @@ class Home extends React.Component {
       description = { item.description} 
     />)
 }
-  
+_loader = () => {
+  const { loadingMore} = this.state
+
+
+  return( loadingMore ? <Text> loading data</Text>: null)
+}
 
 
 
   componentDidMount() {
-    const { navigation } = this.props;
-    this.focusListener = navigation.addListener('didFocus', () => {
-    //   console.log("component did Mount")
-      // this.fetchData()
-      //  axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=10&skip=0`).then(( response ) => {
-      //    const { data } =  response
-      //    this.setState(({
-      //      data,
-      //      isLoading:false
-      //    }))
-      //  })
-   this.setState(({ activeTab: true }))
+  //   const { navigation } = this.props;
+  //   this.focusListener = navigation.addListener('didFocus', () => {
+  //   //   console.log("component did Mount")
+  //     // this.fetchData()
+  //     //  axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=10&skip=0`).then(( response ) => {
+  //     //    const { data } =  response
+  //     //    this.setState(({
+  //     //      data,
+  //     //      isLoading:false
+  //     //    }))
+  //     //  })
+  //  this.setState(({ activeTab: true }))
       
-    });
+    // });
 
-     
+     this.fetchData()
     
     
     
@@ -102,10 +132,10 @@ componentWillReceiveProps ( nextProps ) {
 } 
   render() {
      
-     const {isLoading, data, dataLength , activeTab   } = this.state
+     const {isLoading, data, dataLength , activeTab ,  loadingMore  } = this.state
      const { loadingState } = this.props
 
-     console.log("Tab status", activeTab )
+     console.log("loading more", loadingMore )
     return ( 
     
     <Container>
@@ -118,7 +148,7 @@ componentWillReceiveProps ( nextProps ) {
 
               </Body>
           </Header>
-          <Content>
+         
           
 
               <View>
@@ -133,24 +163,47 @@ componentWillReceiveProps ( nextProps ) {
                       data={ data}
                       ItemSeparatorComponent={() => <View style={{ marginBottom:-450 }} />}
                       renderItem={ this._renderItem}
-                      onEndReached = {()=> 
-                        this.fetchData()
-                       }
+                      onEndReached = { this._handleLoadMore }
                       initialNumToRender={8}
-                      maxToRenderPerBatch={2}
-                      onEndReachedThreshold={0.01}
+                      
+                      onEndReachedThreshold={0.5}
+                      ListFooterComponent= { this._loader}
                       
                />  
-               {/* { loadingMore ? <Spinner color = "red"/> : null } */}
+            
                <Text> { dataLength}</Text>
                </View> )
 
               }
           
             </View>
-          </Content>
+          
     </Container>
     );
+
+    // return( <View>
+    
+    // { 
+    //           isLoading ? <Spinner color='red' />  : 
+          
+    //            (
+    //            <View>
+    //               <FlatList
+    //                   data={ data}
+    //                   ItemSeparatorComponent={() => <View style={{ marginBottom:-450 }} />}
+    //                   renderItem={ this._renderItem}
+    //                   onEndReached = {this.fetchData }
+    //                   initialNumToRender={8}
+    //                   maxToRenderPerBatch={2}
+    //                   onEndReachedThreshold={0.5}
+                      
+    //            />  
+    //            {/* { loadingMore ? <Spinner color = "red"/> : null } */}
+    //            <Text> { dataLength}</Text>
+    //            </View> )
+
+    //           }
+    // </View>)
   }
 
 }
