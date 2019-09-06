@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity , FlatList , ScrollView  } from 'react-native';
 import Products  from "./Products";
-import { encode } from "base-64";
+
 import Modal from "./Modal";
 import { Spinner} from "native-base"
 

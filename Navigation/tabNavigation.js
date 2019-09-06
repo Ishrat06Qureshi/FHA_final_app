@@ -6,7 +6,7 @@ import Home from "../Components/Home";
 import Order from "../Components/Order";
 import Logout from "../Components/Logout";
 import Search from "../Components/Search";
-
+import Modal from "../Components/ModalTest";
 const TabBar = createBottomTabNavigator(
     {
             Home: {

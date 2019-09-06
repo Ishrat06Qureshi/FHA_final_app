@@ -6,6 +6,7 @@ import axios from "axios";
 import Products from "./Products";
 
 
+
 export default class Search extends React.Component {
     state = {
         data : [],
@@ -20,12 +21,10 @@ export default class Search extends React.Component {
     }
 
     getProduct = ( productId) => {
-      
+      Keyboard.dismiss()
       axios.get(`http://13.59.64.244:3000/api/products/${productId}`).
       then(( response )=>   
-      this.setState(({ searchedProducts : response.data}) , ()=> Keyboard.dismiss())
-      // console.log("selected product from API" , response.data)
-      )
+      this.setState(({ searchedProducts : response.data})))
       
       .catch( err => console.log("error" , err ))
     }
@@ -39,22 +38,35 @@ export default class Search extends React.Component {
   
     handleInput = ( userInput ) => {
       // console.log("userInput" , userInput )
-     const { data  } = this.state
-      const filterList = data.filter( entry => 
-        entry.productCode.includes( userInput.toLowerCase() ) ||
-         entry.description.includes(userInput.toUpperCase()))
-   if()
-     this.setState(({
-       userInput,
-       showSuggestions:true,
-       filterList
-     }))  
+      this.setState(({ userInput}) , ( ) => {
     
+        this.showSuggestion( )
+      }) }
+
+
+    showSuggestion = (  ) => {
+      const { data , userInput  } = this.state
+      console.log("userInput" , userInput)
+      const filterList = data.filter( entry => 
+         entry.productCode.includes( userInput.toLowerCase() ) ||
+         entry.description.includes(userInput.toUpperCase()))
+         console.log("filter" , filterList)
+       if( filterList.length === 0 ) {
+         axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=85&skip=0&search=${userInput}`)
+         .then(( response ) => 
+         this.setState(({
+          showSuggestions:true,
+          filterList:response.data })))
+       }
+       else {
+        this.setState(({ 
+          showSuggestions:true,
+          filterList }))
+
+      }
     }
+    
     selected = ( item  ) => {
-       Keyboard.dismiss()
-       console.log("item", item)
-      
        this.setState(({ 
          userInput: item.productCode,
          showSuggestions:false
@@ -72,7 +84,7 @@ export default class Search extends React.Component {
        <TouchableOpacity  onPress = {() => this.selected( item )}>
          <View>
         
-              <Text style = {{ color:"#008081"}}>
+              <Text style = {{ color:"#DA011D"}}>
                 { item.productCode}
               </Text>
               <Text style = {{ color : "#A9A9A9"}}>
@@ -80,21 +92,14 @@ export default class Search extends React.Component {
               </Text>
        
               </View> 
-         </TouchableOpacity>
- 
-    
-    
-    
-    )
+         </TouchableOpacity>)
    } 
 
 
     
     render() {
-      const { showSuggestions , filterList ,  searchedProducts } = this.state
-      // console.log("showSuggestion",showSuggestions)
-      // console.log("serverData",data )
-      // console.log("selected Product" ,  searchedProducts )
+      const { showSuggestions, filterList ,  searchedProducts } = this.state
+ 
       return(
         <Container>
      
@@ -110,7 +115,7 @@ export default class Search extends React.Component {
           </Item>
           <View> 
           { showSuggestions ? 
-          <Card>
+       
             
           <FlatList
            data = { filterList }
@@ -118,8 +123,7 @@ export default class Search extends React.Component {
            _keyExtractor =  {(item, index) => item.id }
            keyboardShouldPersistTaps='always'
 
-          />
-          </Card> : null}
+          /> : null}
            {  searchedProducts.length ?  searchedProducts.map(( item ) => <Products   productCode  = { item.productCode}
       description = { item.description} /> ) 
            : null  }
