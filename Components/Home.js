@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text , Input , Item , H3 , Spinner , InputGroup } from 'native-base';
-import { Image , Dimensions , View  , StyleSheet ,  FlatList} from "react-native"
+import { Image , Dimensions , View  , StyleSheet ,  FlatList , TouchableOpacity} from "react-native"
 import Products from "./Products";
+
+
+
 // import { encode } from "base-64";
 import axios from "axios";
 import { connect } from "react-redux"
@@ -34,7 +37,7 @@ class Home extends React.Component {
   fetchData = () => {
     const { skippedProducts } = this.state
 
-    axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=10&skip=${skippedProducts}&search=0`).
+    axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=1&skip=${skippedProducts}&search=0`).
     then(( response)  =>  this.setState( ( preState ) => {
       return({
         data:skippedProducts === 0 ? Array.from(response.data) : [...preState.data , ...response.data ],
@@ -58,10 +61,16 @@ class Home extends React.Component {
 
    _renderItem = ({item}) => {
   
-    return( <Products
+    return( 
+     
+        
+    <Products
       productCode  = { item.productCode}
       description = { item.description} 
-    />)
+      history = { this.props.history}
+    />
+    
+    )
 }
 _loader = () => {
   const { loadingMore} = this.state
@@ -113,6 +122,8 @@ componentWillReceiveProps ( nextProps ) {
                       initialNumToRender={8}  
                       onEndReachedThreshold={0.5}
                       ListFooterComponent= { this._loader}
+                      keyExtractor={(item, index) => item._id}
+
                      
                       
                />  
@@ -121,7 +132,7 @@ componentWillReceiveProps ( nextProps ) {
                </View> )
 
               }
-          
+           
             </View>
           
     </Container>

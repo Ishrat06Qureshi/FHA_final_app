@@ -8,7 +8,7 @@ import Finalogin from "../Components/FinalLogin";
 import Modal from "../Components/Modal";
 import Customerdetails from "../Components/CustomerDetails";
 import TabBar from "./tabNavigation";
-import Orderdetails from "../Components/OrderDetails"
+import PlacementDetails from "../Components/PlacementDetails"
 const AppStackNavigator = createStackNavigator({
  
     Splash:{
@@ -35,8 +35,8 @@ const AppStackNavigator = createStackNavigator({
     Home:{
       screen: TabBar
     },
-     Orderdetails : {
-      screen: Orderdetails,
+    PlacementDetails : {
+      screen: PlacementDetails,
       navigationOptions: {
       header: null} ,
     } , 
