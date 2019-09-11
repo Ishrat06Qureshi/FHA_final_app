@@ -37,34 +37,34 @@ const validators = {
       valid: false,
       state: ''
     },
-    firstName: {
+    companyName: {
       rules: [
         {
           test: (value) => {
             return value.length 
           },
-          message: 'first name  is required',
+          message: 'Company Name   is required',
         },
         {
           test: /^[a-zA-Z\s]+$/,
-          message: 'first Name can only contain alphabets',
+          message: 'Company can only contain alphabets',
         },
       ],
       errors: [],
       valid: false,
       state: ''
     },
-    lastName: {
+    contactPersonName: {
       rules: [
         {
           test: (value) => {
             return value.length 
           },
-          message: 'last name  is required',
+          message: 'contact Person Name  is required',
         },
         {
           test: /^[a-zA-Z\s]+$/,
-          message: 'last Name can only contain alphabets',
+          message: 'contact Person Name can only contain alphabets',
         },
       ],
       errors: [],
@@ -91,6 +91,46 @@ const validators = {
       valid: false,
       state: ''
     },
+    customerNumber: {
+      rules: [
+        // {
+        //   test: (value) => {
+        //     return value.length
+        //   },
+        //   message: 'Phone Number is required',
+        // },
+        
+        {
+          test: (value) => {
+            return value.length  <=5
+          },
+          message: 'Customer number is not valid',
+        },
+      ],
+      errors: [],
+      valid: false,
+      state: ''
+    },
+    officeAddress:{
+      rules: [
+        // {
+        //   test: (value) => {
+        //     return value.length
+        //   },
+        //   message: 'Phone Number is required',
+        // },
+        
+        {
+          test: (value) => {
+            return value.length == 0
+          },
+          message: 'office address is mandatory',
+        },
+      ],
+      errors: [],
+      valid: false,
+      state: ''
+    }
   };
   
   export default validators;

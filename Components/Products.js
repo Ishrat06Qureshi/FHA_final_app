@@ -36,7 +36,7 @@ import { withNavigation } from "react-navigation"
                    <Text style={{fontWeight: 'bold'}}> Product Description</Text>
                    <Text> { description }</Text>
                    <Text style={{fontWeight: 'bold'}}> Product Code</Text>
-               <Text> { productCode } </Text>
+               <Text numberOfLines = { 0.5 }> { productCode } </Text>
                <Button transparent onPress = { ( ) => this.props.navigation.navigate("PlacementDetails")}>
                   <Icon name="ios-basket"  style = {{ color:"#FFA500"}} />
                   <Text style = {{ color :"#A9A9A9"}}> Buy Now </Text>

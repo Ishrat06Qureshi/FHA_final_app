@@ -11,7 +11,7 @@ import {
    export default class Welcome extends React.Component {
      navigateToLogin = () => {
        console.log("login")
-        this.props.navigation.navigate("Finalogin")
+        this.props.navigation.navigate("NewLogin")
      }
 
      navigateToSignup = () => {

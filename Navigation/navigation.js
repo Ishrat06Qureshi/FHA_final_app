@@ -9,6 +9,8 @@ import Modal from "../Components/Modal";
 import Customerdetails from "../Components/CustomerDetails";
 import TabBar from "./tabNavigation";
 import PlacementDetails from "../Components/PlacementDetails"
+import Login from "../Components/NewLogin";
+import Signup from "../Components/NewSignUp"
 const AppStackNavigator = createStackNavigator({
  
     Splash:{
@@ -22,13 +24,13 @@ const AppStackNavigator = createStackNavigator({
       navigationOptions: {
         header: null}
     },
-    Finalogin:{
-      screen:Finalogin,
+    NewLogin:{
+      screen:Login,
       navigationOptions: {
         header: null}
     },
       Finalsignup:{
-      screen:Finalsignup,
+      screen:Signup,
       navigationOptions: {
         header: null}
     },
@@ -49,7 +51,7 @@ const AppStackNavigator = createStackNavigator({
  
     
 } , 
-{ initialRouteName:"Home",
+{ initialRouteName:"NewLogin",
 defaultNavigationOptions: {
     header: null
 }
