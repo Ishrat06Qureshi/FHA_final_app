@@ -13,7 +13,7 @@ import  { LOADING } from "../Actions/LoadingAction"
 import productMiddleware from "../Middleware/ProductMiddleware"
 import LoadingAction from "../Actions/LoadingAction";
 import { withNavigation } from "react-navigation"
-
+import Radio from "./Radio"
 
 
 
@@ -101,41 +101,42 @@ componentWillReceiveProps ( nextProps ) {
      console.log("loading more", loadingMore )
     return ( 
     
-    <Container>
-          <Header style = {{ backgroundColor:"#DA011D" , height:120 , width: Dimensions.get("window").width}}>
+    // <Container>
+    //       <Header style = {{ backgroundColor:"#DA011D" , height:120 , width: Dimensions.get("window").width}}>
 
-            <Body>
-              <Text style = {{ color:"white"  , fontWeight:"bold" , textAlign:"center"}}> 
-              Fastening House Atlantic </Text>
+    //         <Body>
+    //           <Text style = {{ color:"white"  , fontWeight:"bold" , textAlign:"center"}}> 
+    //           Fastening House Atlantic </Text>
 
 
-              </Body>
-          </Header>
-              <View> 
-            { 
-              isLoading ? <Spinner color='red' />  : ( <View>
-                  <FlatList
-                      data={ data}
-                      ItemSeparatorComponent={() => <View style={{ marginBottom:-350 }} />}
-                      renderItem={ this._renderItem}
-                      onEndReached = { this._handleLoadMore }
-                      initialNumToRender={8}  
-                      onEndReachedThreshold={0.5}
-                      ListFooterComponent= { this._loader}
-                      keyExtractor={(item, index) => item._id}
+    //           </Body>
+    //       </Header>
+    //           <View> 
+    //         { 
+    //           isLoading ? <Spinner color='red' />  : ( <View>
+    //               <FlatList
+    //                   data={ data}
+    //                   ItemSeparatorComponent={() => <View style={{ marginBottom:-350 }} />}
+    //                   renderItem={ this._renderItem}
+    //                   onEndReached = { this._handleLoadMore }
+    //                   initialNumToRender={8}  
+    //                   onEndReachedThreshold={0.5}
+    //                   ListFooterComponent= { this._loader}
+    //                   keyExtractor={(item, index) => item._id}
 
                      
                       
-               />  
+    //            />  
             
-               <Text> { dataLength}</Text>
-               </View> )
+    //            <Text> { dataLength}</Text>
+    //            </View> )
 
-              }
+    //           }
            
-            </View>
+    //         </View>
           
-    </Container>
+    // </Container>
+    <Radio/>
     );
   }
 

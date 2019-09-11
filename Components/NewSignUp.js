@@ -5,11 +5,11 @@ import {
     Dimensions,
     Image,
     SafeAreaView,
-    Button,
     TouchableOpacity,
     View,
     ScrollView
  } from "react-native";
+
 import {
     Container ,
     Header ,
@@ -19,8 +19,6 @@ import {
     InputGroup, 
     Input, 
 } from "native-base";
-import validation_functions from "../utils/validation_functions";
-import Constants from 'expo-constants';
 import  { 
     MaterialIcons ,
     FontAwesome,
@@ -29,8 +27,17 @@ import  {
     Ionicons,
     MaterialCommunityIcons
 } from "@expo/vector-icons"
+
 import { item , container  , icon_style } from "../Styles/index";
-import { Primary_Color } from "../Styles/colors"
+import { Primary_Color } from "../Styles/colors";
+import CustomButton from "./Button";
+import validation_functions from "../utils/validation_functions";
+import Constants from 'expo-constants';
+
+
+
+
+
 const Width = Dimensions.get("window").width
 const Height = Dimensions.get("window").height
 export default class Signup extends Component {
@@ -75,6 +82,8 @@ export default class Signup extends Component {
                               <Input
                                placeholder="Company Name"
                                onChangeText = { (companyName) => this.onChangeValue("companyName" , companyName )} 
+                              
+                               
                               />
                              </InputGroup>
                          </ListItem>
@@ -88,6 +97,8 @@ export default class Signup extends Component {
                               <Input
                                placeholder="office Address  "
                                onChangeText = { (officeAddress) => this.onChangeValue("officeAddress" , officeAddress )} 
+                             
+                               
                               />
                              </InputGroup>
                          </ListItem>
@@ -101,6 +112,8 @@ export default class Signup extends Component {
                               <Input
                                placeholder="phone number"
                                onChangeText = { (phoneNumber) => this.onChangeValue("phoneNumber" , phoneNumber )} 
+                               
+                               
                               />
                              </InputGroup>
                          </ListItem>
@@ -114,6 +127,8 @@ export default class Signup extends Component {
                               <Input
                                placeholder="contact Person Name"
                                onChangeText = { (contactPersonName) => this.onChangeValue("contactPersonName" , contactPersonName )} 
+                               
+                               
                               />
                              </InputGroup>
                          </ListItem>
@@ -127,6 +142,8 @@ export default class Signup extends Component {
                               <Input
                                placeholder="customer number (optional) "
                                onChangeText = { (customerNumber) => this.onChangeValue("customerNumber" , customerNumber )} 
+                               value = "150"
+                               
                               />
                              </InputGroup>
                          </ListItem>
@@ -158,18 +175,8 @@ export default class Signup extends Component {
                          </ListItem>
                          { validation_functions.displayValidationErrors("password")}
                      </List>
-                     <TouchableOpacity >
-                         <View   style = {{ height: "70%" ,
-                         width : "80%" , 
-                         backgroundColor:{ Primary_Color },
-                         borderWidth:2,
-                         borderColor:{ Primary_Color }
-                        }}>
-                         <Text> Sign up </Text>
-                         </View>
-                         
-                         
-                     </TouchableOpacity>
+                    
+                     <CustomButton/>
                  {/* </View>
                  </ScrollView> */}
                  </Content>

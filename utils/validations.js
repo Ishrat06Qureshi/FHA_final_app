@@ -130,6 +130,47 @@ const validators = {
       errors: [],
       valid: false,
       state: ''
+    },
+    Quantity:{
+      rules: [
+        // {
+        //   test: (value) => {
+        //     return value.length
+        //   },
+        //   message: 'Phone Number is required',
+        // },
+        
+        {
+          test: (value) => {
+            return value.length == 0
+          },
+          message: 'Quantity is required',
+        },
+      ],
+      errors: [],
+      valid: false,
+      state: ''
+    },
+    shippingAddress:{
+      rules: [
+        // {
+        //   test: (value) => {
+        //     return value.length
+        //   },
+        //   message: 'Phone Number is required',
+        // },
+        
+        {
+          test: (value) => {
+            return value.length == 0
+          },
+          message: 'shipping Address is required',
+        },
+      ],
+      errors: [],
+      valid: false,
+      state: ''
+
     }
   };
   

@@ -51,7 +51,7 @@ const AppStackNavigator = createStackNavigator({
  
     
 } , 
-{ initialRouteName:"NewLogin",
+{ initialRouteName:"Home",
 defaultNavigationOptions: {
     header: null
 }
