@@ -65,7 +65,7 @@ class Home extends React.Component {
      
         
     <Products
-      productCode  = { item.productCode}
+      productCode  = { item.productCode }
       description = { item.description} 
       history = { this.props.history}
     />

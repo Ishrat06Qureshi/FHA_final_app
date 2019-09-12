@@ -2,7 +2,7 @@ import React from "react";
 import {  createBottomTabNavigator  } from "react-navigation";
 import {AntDesign , MaterialIcons} from "@expo/vector-icons";
 
-import Home from "../Components/Home";
+import Home from "../Components/newHome";
 import Order from "../Components/Order";
 import Logout from "../Components/Logout";
 import Search from "../Components/Search";
