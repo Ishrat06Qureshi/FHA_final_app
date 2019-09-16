@@ -10,8 +10,9 @@ const Input = ( props ) => {
          isSecureTextEntry ,
         //   keyBoardType ,
            onChangeText  , 
-           errorName} = props
-           console.log("props",props)
+           errorName,
+           defaultAnswer , edit} = props
+        
    return( <View style = {{ alignContent:"center"}}>
           <Text style = { label_styles}>
               {label}
@@ -22,6 +23,8 @@ const Input = ( props ) => {
           secureTextEntry = { isSecureTextEntry }
           underlineColorAndroid="transparent"
           onChangeText = {( value ) => onChangeText( errorName , value) }
+          defaultValue= { defaultAnswer? defaultAnswer  : null}
+          editable = { edit }
         //   keyboardType = { keyBoardType}
           style = { Input_styles }
            

@@ -27,7 +27,7 @@ import { Image_styles , bold_Text } from "../Styles"
                    <Text> { description }</Text>
                    <Text style={ bold_Text }> Product Code</Text>
                <Text numberOfLines = { 0.5 }> { productCode } </Text>
-               <Button  transparent onPress = { ( ) => this.props.navigation.navigate("Order")} >
+               <Button  transparent onPress = { ( ) => this.props.navigation.navigate("OrderPlacement" , {productCode})} >
                   <Icon name="ios-basket"  style = {{ color:"#FFA500"}} />
                   <Text style = {{ color :"#A9A9A9"}}> Buy Now </Text>
                 </Button>

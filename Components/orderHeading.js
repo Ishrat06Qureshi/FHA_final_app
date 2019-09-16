@@ -4,13 +4,13 @@ import { bold_Text } from "../Styles"
 
 import {HeadingContainer ,  Heading_Text} from "../Styles"
 const OrderHeading  = (props ) => {
-    const {  poNumber , onPress} = props
+    const {  poNumber ,  onPressMethod} = props
    return (
     <View style= {HeadingContainer}>
     <Text style = { {...bold_Text ,paddingLeft:20} }>
        PO Number {poNumber}
          </Text>
-      <TouchableOpacity onPress = { onPress }>
+      <TouchableOpacity  onPress = {  onPressMethod }>
       <Text style = { Heading_Text }> View Details </Text>
       </TouchableOpacity>
   </View>

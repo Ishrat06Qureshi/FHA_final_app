@@ -1,6 +1,6 @@
-import React  from "react";
+
 import { createStackNavigator , createAppContainer , createBottomTabNavigator  } from "react-navigation";
-import { Animated, Easing, Platform } from 'react-native';
+
 
 
 import Splash from "../Components/NewSplash";
@@ -14,8 +14,12 @@ import PlacementDetails from "../Components/PlacementDetails"
 import AllProducts from "../Components/AllProducts";
 import MultiForm from "../Components/multistepForm";
 import Signup from "../Components/NewSignUp"
+import OrderPlacement from "../Components/OrderPlacement"
 
-import { fromLeft, zoomIn, zoomOut , fromRight } from 'react-navigation-transitions'
+
+
+
+import { fromLeft,fromRight } from 'react-navigation-transitions'
 const handleCustomTransition = ({ scenes }) => {
   const prevScene = scenes[scenes.length - 2];
   const nextScene = scenes[scenes.length - 1];
@@ -82,6 +86,11 @@ const AppStackNavigator = createStackNavigator({
     navigationOptions: {
      header: null}
 
+  },
+  OrderPlacement:{
+    screen:OrderPlacement,
+    navigationOptions: {
+     header: null}
   }
  
     

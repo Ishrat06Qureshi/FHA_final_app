@@ -4,12 +4,10 @@ import { Text } from "react-native"
 import { bold_Text} from "../Styles";
 import OrderHeading from "./orderHeading";
 import  { 
-    MaterialIcons ,
-    FontAwesome,
+ 
     Entypo,
     AntDesign,
-    Ionicons,
-    MaterialCommunityIcons
+  
 } from "@expo/vector-icons"
 
 onPress = () => {
@@ -22,7 +20,8 @@ const OrderCard  = ( props ) => {
       dateOfOrder, 
       shippingAddress ,
       quantity,
-      poNumber} = props
+      poNumber, 
+      openModal } = props
 
 
       return( <View>
@@ -31,7 +30,7 @@ const OrderCard  = ( props ) => {
           <View style = {{ flexDirection:"column" }}>
               <OrderHeading
                poNumber  = { poNumber}
-               onPress = { onPress }
+               onPressMethod = { openModal }
               />
               <View style ={{ flexDirection:"row" , paddingLeft:10}}>
               <AntDesign

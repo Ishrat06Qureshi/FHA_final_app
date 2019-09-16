@@ -131,7 +131,7 @@ const validators = {
       valid: false,
       state: ''
     },
-    Quantity:{
+    quantity:{
       rules: [
         // {
         //   test: (value) => {

@@ -1,7 +1,10 @@
 import React  , { Component } from "react";
-import { View , Text , FlatList } from "react-native";
+import { View , Text , FlatList , TouchableOpacity  } from "react-native";
+import Modal from "react-native-modal";
 import OrderCard from "./OrderCard"
-import {  Heading_style } from "../Styles"
+import {  Heading_style } from "../Styles";
+import { Card } from "native-base"
+
 export default class Order extends Component {
     state = {
         data:[
@@ -15,6 +18,14 @@ export default class Order extends Component {
     ]
 }
 
+closeModal = () => {
+    this.setState(({ isModalVisible:false}))
+  }
+  openModal = () => {
+    console.log("open Modal")
+    this.setState(({ isModalVisible:true}))
+   
+  }
 _renderItem = ({item}) => {
   
     return( 
@@ -27,12 +38,14 @@ _renderItem = ({item}) => {
       shippingAddress = { item.shippingAddress}
       quantity = {item.quantity}
       poNumber = {item. poNumber}
+      openModal = { this.openModal}
     />
     
     )
 }
     render() {
-         const {data } = this.state
+         const {data , isModalVisible } = this.state
+         console.log("Modal value" , isModalVisible )
         return( <View style = {{ flex:1 , justifyContent:"center"}}>
             <View style = {{ justifyContent:"center" , alignSelf:"center" , marginTop:50 , marginBottom:25}}>
             <Text style = { Heading_style }> Your Orders</Text>
@@ -42,8 +55,25 @@ _renderItem = ({item}) => {
             <FlatList
              data = { data }
              renderItem = { this._renderItem}
+             keyExtractor = {(item, index) => item.poNumber}
             />
-         
+             {
+                 isModalVisible ? <Modal isVisible={ isModalVisible }>
+                     <Card>
+                         <Text> Ishrat </Text>
+                          <TouchableOpacity onPress = { this.closeModal }>
+
+                          <Text> close Modal</Text>
+                          </TouchableOpacity>
+
+                         
+                         
+                         
+                         
+                         
+                     </Card>
+                 </Modal>: null
+             }
         </View>)
     }
 }

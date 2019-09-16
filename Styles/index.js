@@ -19,6 +19,25 @@ const button_Text = {
     lineHeight:50 , 
     textAlign:"center",
 }
+const square_button = {
+    height:50,
+    width:120,
+    
+}
+export const White_Square_button = {
+    ...square_button,
+    borderColor:"red",
+    borderWidth:1,
+    borderRadius:5
+
+}
+
+export const Heading_Container = {
+    justifyContent:"center" ,
+     alignSelf:"center" ,
+      marginTop:50 , 
+      marginBottom:25
+}
 export const Red_Button = {
     ...cylinderButton,
     backgroundColor:red
@@ -42,6 +61,8 @@ export const red_Color_Button = {
     ...cylinderButton,
     backgroundColor:"#DA011D"
 }
+
+
 
 export const bold_Text = {
     fontWeight: 'bold'
