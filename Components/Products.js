@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { Dimensions , Image , Text , View } from 'react-native';
-import { Container,  Content, Card, CardItem, Thumbnail,Body  , Left, Right , Button , Icon   } from 'native-base';
-
-const screenWidth = Dimensions.get("window").width;
+import {Image , Text , View} from 'react-native';
+import { Card, CardItem , Button , Icon   } from 'native-base';
 import { withNavigation } from "react-navigation"
-
+import { Image_styles , bold_Text } from "../Styles"
  class Products extends React.Component {
   state = {
     data: {},
@@ -13,42 +11,37 @@ import { withNavigation } from "react-navigation"
  
   render() {
      const  { productCode , description  } = this.props
-
         
-    return (
-
-
-    <Container>
-      <Content>
-         <Card style = {{ height: 200}}>
+    return ( 
+       <View>
+         <Card>
            <View style ={{ flexDirection:"row" }}>
-             <CardItem >
+             <CardItem>
+               
                                   <Image  
-                    source={  {uri:"https://www.fasteninghouseatlantic.com/wp-content/uploads/2019/02/2997-22-1.png"} }
-                    style={{                    
-                       height: 120,
-                     width: 120,
-                    //  marginLeft:80, 
-                     resizeMode: 'cover',
-                   }}/>
-
-                   <View style ={{ flexDirection:"column"}}>
-                   <Text style={{fontWeight: 'bold'}}> Product Description</Text>
+                    source={  {uri:"https://i.pinimg.com/736x/95/06/09/95060928183afad6de380ab328701731.jpg"} }
+                    style={ Image_styles} 
+                   />
+                   <View style ={{ flexDirection:"column" , paddingLeft:10}}>
+                   <Text style={ bold_Text }> Product Description</Text>
                    <Text> { description }</Text>
-                   <Text style={{fontWeight: 'bold'}}> Product Code</Text>
+                   <Text style={ bold_Text }> Product Code</Text>
                <Text numberOfLines = { 0.5 }> { productCode } </Text>
-               <Button transparent onPress = { ( ) => this.props.navigation.navigate("PlacementDetails")}>
+               <Button  transparent onPress = { ( ) => this.props.navigation.navigate("Order")} >
                   <Icon name="ios-basket"  style = {{ color:"#FFA500"}} />
                   <Text style = {{ color :"#A9A9A9"}}> Buy Now </Text>
                 </Button>
                      </View>   
-                   
-                   
-             </CardItem>
+                     </CardItem> 
+                 </View>  
+            
+            
+           </Card>
            </View>
-         </Card>
-      </Content>
-    </Container>
+         
+      
+   
+         
     );
   }
 }

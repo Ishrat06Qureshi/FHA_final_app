@@ -1,10 +1,14 @@
 import  React , {Component} from 'react';
 import { Text, View, StyleSheet, ImageBackground , Image  , TextInput , TouchableOpacity , CheckBox } from 'react-native';
 import {EvilIcons ,AntDesign} from "@expo/vector-icons";
-import validation_functions from "../utils/validation_functions";
+
 import LoginMiddleware from "../Middleware/LoginMiddleware";
 import { connect } from "react-redux";
-
+import Input from "./Input"
+import Customer from './Customer';
+import Company from "./Company";
+import Button from "./Button";
+import {Red_Button , White_Text} from "../Styles"
 // import Loading from "../Redux/Actions/LoadingAction"
 
  class Finalogin extends Component {
@@ -58,6 +62,9 @@ import { connect } from "react-redux";
 
   }
 
+  handleNext = () => {
+    console.log("good")
+  }
   callRedux  = () => {
     // const { dispatch } = this.props
     // dispatch(Loading(true))
@@ -75,93 +82,38 @@ import { connect } from "react-redux";
     const {  email , password , checked  , error , credential_error_msg  , validity , notValidate} = this.state
     const { token } = this.props
     console.log("token" , token )
-    return(<View style  = { styles.mainContainer}>
-
-      <View style = { styles.imageContainer}>
-            <ImageBackground source = { require("../assets/login-bg-01.png")}
-            style = { styles.container}>
-            <Image source = {require("../assets/fastening-logo.png")}
-            style = {styles.logo}
-            />
-        </ImageBackground>
-        </View>
-      <View style = {styles.formContainer}>
-          <View style = {styles.form} >
-
-             
-
-
-           <View style = {styles.fieldMainContainer}> 
-               <Text>Email:</Text>
-                <View style = {styles.fields}>
-                   <EvilIcons name="envelope" size={20}   color="#707070" style = {styles.image}/>
-                     <TextInput  style ={styles.text}
-                     placeholder={'Email address'}
-                  placeholderTextColor={'#707070'}
-                   onChangeText = {( email ) => this.handleInputChange("email" , email)}
-                  value = {email}
-                
-                     />
-              </View>
-
-          </View>
-           
-           { validation_functions.displayValidationErrors("email")}
-           <View style = {styles.fieldMainContainer}> 
-               <Text>Password:</Text>
-                <View style = {styles.fields}>
-                   <AntDesign name="eyeo" size={20}   color="#707070" style = {styles.image}/>
-                     <TextInput  style ={styles.text}
-                     placeholder={'password'}
-                  placeholderTextColor={'#707070'}
-                   onChangeText = {( password ) => this.handleInputChange("password" , password )}
-                  value = { password }
-                  secureTextEntry = {true}
-                     />
-              </View>
-          </View>
-          { validation_functions.displayValidationErrors("password")}
-            
-
-          <View style = {styles.buttonContainer}>
-           <TouchableOpacity  style = {[ styles.button  , styles.login ]} 
-            onPress = { this.handleSubmit }
-            
-            >
-               <Text style = {styles.login_text}> Log in</Text>
-          </TouchableOpacity>
-       </View>
-
-       <View style = {styles.forgetPasswordContainer}>
-         <View style = { styles.checkbox}>
-         <CheckBox
-         title=" Remember me"
-         checked = {checked}
-         />
-         </View>
-
-         <View style = {styles.rememberMe}>
-          <TouchableOpacity>
-            <Text style = { styles.forgetPasswordText}> forget Password</Text>
-          </TouchableOpacity>
-         </View>
-       </View>
-
-       
-
-        <View style={ styles.tag}>
-         <Text style = {{ color:"#707070"}}> New User?</Text>
-         <TouchableOpacity onPress = {this.navigateToLogin}> 
-         <Text>Sign up </Text></TouchableOpacity>
-          
-        </View>
-        </View>
-      
-      </View>
-
-
+    return(
+   <View style ={{ justifyContent:"center" , alignItems:"center"}}>
+     
+    <View style = {{ flex:1 , justifyContent:"center" }}>
+      <Input
+               label = "EMAIL"
+               placeHolderText="john22@gmail.com"
+               isSecureTextEntry = { false}
+               onChangeText= { this.handleInputChange} 
+               errorName = "email" 
+               />
+                 <Input
+               label = "PASSWORD"
+               placeHolderText="*******"
+               isSecureTextEntry = { false}
+               onChangeText= { this.handleInputChange}
+               errorName = "password" 
+               />  
+              <Button 
+               onPress = {this.handleNext}
+               text = "Login"
+               buttonStyle = {Red_Button}
+               textStyle = { White_Text }
+               
+               />
+    </View>
+    </View>
     
-    </View>)
+   
+   
+    
+    )
   } 
 }
 

@@ -34,6 +34,7 @@ const  resetValidators = () => {
 
 
   const displayValidationErrors = ( fieldName ) => {
+    console.log("display fucntion" , fieldName )
     const validator =  validators[fieldName];
     const { errors } = validator
      return ( <Text style={{ 

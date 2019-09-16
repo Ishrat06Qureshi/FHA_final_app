@@ -4,7 +4,11 @@ import axios from "axios";
 import { AntDesign , FontAwesome  , EvilIcons} from "@expo/vector-icons"
 import { Spinner } from "native-base"
 import validation_functions from "../utils/validation_functions";
-import URL  from "../urls/urls"
+import URL  from "../urls";
+import  Input from "./Input";
+import Button from "./Button";
+import Company from "./Company";
+import Customer from "./Customer"
 
 export default class Finalsignup extends React.Component {
 
@@ -16,9 +20,13 @@ export default class Finalsignup extends React.Component {
     phoneNumber:"",
     loading:false,
     error:{},
-    serverError : []
+    serverError : [],
+    StepOpen:true,
+   
+
   }
 
+  
 
  
 
@@ -49,111 +57,42 @@ navigateToLogin = () => {
     
   }
   
+  handleNext = () => {
+    this.setState(({ StepOpen:false})) 
+  }
   
   render() {
 
-    const { firstName  , lastName , email , password , error , phoneNumber, loading} = this.state
+    const { firstName  , lastName , email , password , error , phoneNumber, loading , 
+      isStepOneOpen , isStepTwoOpen , StepOpen} = this.state
     return(
-      <View style  = { styles.mainContainer}>
-{/*         
-        <View style = { styles.imageContainer}>
-              <ImageBackground source = { require("../assets/login-bg-01.png")}
-              style = { styles.container}>
-              <Image source = {require("../assets/fastening-logo.png")}
+      <View style ={{  flex:1}}>
+        {/* <Button/> */}
+              {/* <View style = { styles.imageContainer}>
+             
+              <Image source = {require("../assets/fastening.png")}
               style = {styles.logo}
               />
-          </ImageBackground>
-          </View> */}
-          
-        <View style = {styles.formContainer}>
-            <View style = {styles.form} >
-               <View style = {styles.fieldMainContainer}> 
-                 <Text>Name:</Text>
-                  <View style = {styles.fields}>
-                     <AntDesign name="user" size={20}   color="#707070" style = {styles.image}/>
-                       <TextInput  style ={styles.text}
-                       placeholder={'first name'}
-                    placeholderTextColor={'#707070'}
-                    onChangeText = {(firstName ) => this.handleInputChange("firstName", firstName) }
-                    value = { firstName }
-                   />
-                </View>
-            </View>
-            { validation_functions.displayValidationErrors("firstName")}
-             
-             <View style = {styles.fieldMainContainer}> 
-                 <Text>lastName:</Text>
-                  <View style = {styles.fields}>
-                     <AntDesign name="user" size={20}   color="#707070" style = {styles.image}/>
-                       <TextInput  style ={styles.text}
-                       placeholder={'last name'}
-                    onChangeText = { (lastName) =>  this.handleInputChange("lastName", lastName)}
-                    value = { lastName}
-                       />
-                </View>
-            </View>
-            { validation_functions.displayValidationErrors("lastName")} 
-  
-             <View style = {styles.fieldMainContainer}> 
-                 <Text>Email:</Text>
-                  <View style = {styles.fields}>
-                     <EvilIcons name="envelope" size={20}   color="#707070" style = {styles.image}/>
-                       <TextInput  style ={styles.text}
-                       placeholder={'Email address'}
-                    placeholderTextColor={'#707070'}
-                  onChangeText = { (email) => this.handleInputChange("email", email)}
-                    value = {email}
-                       />
-                </View>
-            </View>
-            { validation_functions.displayValidationErrors("email")}
-             
-  
-             <View style = {styles.fieldMainContainer}> 
-                 <Text>Password:</Text>
-                  <View style = {styles.fields}>
-                     <AntDesign name="eyeo" size={20}   color="#707070" style = {styles.image}/>
-                       <TextInput  style ={styles.text}
-                       placeholder={'password'}
-                    placeholderTextColor={'#707070'}
-                 onChangeText = { (password  ) =>  this.handleInputChange("password", password)}
-                    value = {password}
-                    secureTextEntry = {true}
-                       />
-                </View>
-            </View>
-            { validation_functions.displayValidationErrors("password")}
-  
-  
-             <View style = {styles.fieldMainContainer}> 
-                 <Text>Number:</Text>
-                  <View style = {styles.fields}>
-                     <AntDesign name="eyeo" size={20}   color="#707070" style = {styles.image}/>
-                       <TextInput  style ={styles.text}
-                       placeholder={'number'}
-                    placeholderTextColor={'#707070'}
-                 onChangeText = { (phoneNumber ) =>  this.handleInputChange("phoneNumber" , phoneNumber )}
-                    value = {phoneNumber}
-                       />
-                </View>
-            </View>
-            
-            { validation_functions.displayValidationErrors("phoneNumber")}
-
-            <View style = {styles.buttonContainer}>
-             <TouchableOpacity  style = {[ styles.button  , styles.sign_up ]}  onPress = { this.handleSignup} >
-                 <Text style = {styles.sign_up_text}> Sign up</Text>
-            </TouchableOpacity>
-         </View>
-          <View style={ styles.tag}>
-           <Text style = {{ color:"#707070"}}> Already have an account?</Text>
-           <TouchableOpacity onPress = {this.navigateToLogin}> 
-           <Text>Sign in </Text></TouchableOpacity>
-            
-          </View>
-          </View>
         
-        </View>
+          </View>  */}
+          
+          { StepOpen ? 
+          
+          <Company
+          handleInputChange = { this.handleInputChange}
+          handleNext = { this.handleNext}
+       />:
+          <Customer
+          handleInputChange = { this.handleInputChange}
+          handleNext = { this.handleNext}
+          />
+          
+          
+         
+          
+          
+          }
+      
         </View> 
     
     )
@@ -193,6 +132,7 @@ const styles = StyleSheet.create({
     flexDirection:"column",
   },
   fields:{
+    flex:1,
     flexDirection:"row",
     marginBottom:"3%"
   },
@@ -200,11 +140,12 @@ const styles = StyleSheet.create({
     marginBottom:"1%"
   },
    text:{
+     flex:1,
     borderColor:"#707070",
     borderWidth:0.25,
     height:"100%",
     width:"80%",
-    borderRadius:5,
+    // borderRadius:5,
     paddingLeft: 50,
   },
    image:{

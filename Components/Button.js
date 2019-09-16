@@ -1,17 +1,12 @@
 import React , {  Component } from "react"
 import { View , Text ,  TouchableOpacity } from "react-native";
-import {
-     Button 
- }  from "../Styles/index"
+import {Red_Button , White_Text} from "../Styles"
 
-export default class CustomButton extends Component {
-  render() {
-      return (
-           <TouchableOpacity onPress={()=> console.log("onPress")} style = {  Button }>
-             
-                   <Text style = {{ color:"white" }}> Buy Now </Text>
-              
-           </TouchableOpacity>
-      );
-  }
+const Button  = ( props ) => {
+   const { onPressMethod  , text , buttonStyle, textStyle } = props 
+  return ( <TouchableOpacity style = { buttonStyle} onPress = { onPressMethod}>
+     <Text style ={ textStyle } > {text}</Text> 
+   </TouchableOpacity> )
+
 }
+export default Button

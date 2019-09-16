@@ -2,7 +2,7 @@ import TokenAction from "../Actions/tokenAction";
 import UserDataAction from "../Actions/UserDataAction";
 import ErrorAction from "../Actions/errorAction";
 import axios from "axios";
-import URL from "../urls/urls"
+import URL from "../urls"
 
 
 

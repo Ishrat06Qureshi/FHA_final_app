@@ -13,7 +13,7 @@ import  { LOADING } from "../Actions/LoadingAction"
 import productMiddleware from "../Middleware/ProductMiddleware"
 import LoadingAction from "../Actions/LoadingAction";
 import { withNavigation } from "react-navigation"
-import Radio from "./Radio"
+
 
 
 
@@ -114,19 +114,19 @@ componentWillReceiveProps ( nextProps ) {
     //           <View> 
     //         { 
     //           isLoading ? <Spinner color='red' />  : ( <View>
-    //               <FlatList
-    //                   data={ data}
-    //                   ItemSeparatorComponent={() => <View style={{ marginBottom:-350 }} />}
-    //                   renderItem={ this._renderItem}
-    //                   onEndReached = { this._handleLoadMore }
-    //                   initialNumToRender={8}  
-    //                   onEndReachedThreshold={0.5}
-    //                   ListFooterComponent= { this._loader}
-    //                   keyExtractor={(item, index) => item._id}
+              //     <FlatList
+              //         data={ data}
+              //         ItemSeparatorComponent={() => <View style={{ marginBottom:-350 }} />}
+              //         renderItem={ this._renderItem}
+              //         onEndReached = { this._handleLoadMore }
+              //         initialNumToRender={8}  
+              //         onEndReachedThreshold={0.5}
+              //         ListFooterComponent= { this._loader}
+              //         keyExtractor={(item, index) => item._id}
 
                      
                       
-    //            />  
+              //  />  
             
     //            <Text> { dataLength}</Text>
     //            </View> )
@@ -136,7 +136,10 @@ componentWillReceiveProps ( nextProps ) {
     //         </View>
           
     // </Container>
-    <Radio/>
+    
+    <View>
+      <Text> good morning </Text>
+    </View>
     );
   }
 
