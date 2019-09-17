@@ -65,33 +65,23 @@ navigateToLogin = () => {
 
     const { firstName  , lastName , email , password , error , phoneNumber, loading , 
       isStepOneOpen , isStepTwoOpen , StepOpen} = this.state
+      console.log("step", this.state.StepOpen)
     return(
       <View style ={{  flex:1}}>
-        {/* <Button/> */}
-              {/* <View style = { styles.imageContainer}>
-             
-              <Image source = {require("../assets/fastening.png")}
-              style = {styles.logo}
-              />
-        
-          </View>  */}
+      
           
           { StepOpen ? 
+          <Customer
+          handleInputChange = { this.handleInputChange}
+          handleNext = { this.handleNext}
+          />:
           
           <Company
           handleInputChange = { this.handleInputChange}
           handleNext = { this.handleNext}
-       />:
-          <Customer
-          handleInputChange = { this.handleInputChange}
-          handleNext = { this.handleNext}
           />
           
-          
-         
-          
-          
-          }
+             }
       
         </View> 
     

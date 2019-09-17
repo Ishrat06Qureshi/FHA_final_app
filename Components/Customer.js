@@ -5,7 +5,8 @@ import Button from "./Button"
 import {Red_Button , White_Text} from "../Styles"
 const Customer = (  props ) => {
  const { handleInputChange , handleNext} = props
-  return( <View style = {{
+  return( 
+  <View style = {{
     flex:1 , 
     justifyContent:"center" ,
     alignItems:"center" }}>
@@ -42,7 +43,7 @@ const Customer = (  props ) => {
                errorName = "password" 
                />  
               <Button 
-               onPress = {handleNext}
+               onPressMethod  = {handleNext}
                text = "Next"
                buttonStyle = {Red_Button}
                textStyle = { White_Text }

@@ -1,15 +1,15 @@
 import React from "react";
-import { View , Text } from "react-native";
+import { View , Text , ScrollView } from "react-native";
 import { Card } from "native-base";
+import { bold_Text} from "../Styles";
+import CustomText from "./CustomText"
 import  { 
  
     Entypo,
-    AntDesign,
-    
-FontAwesome
+    FontAwesome
   
 } from "@expo/vector-icons"
-
+import OrderHeading from "./orderHeading"
 const OrderDetails = ( props ) => {
 
     const { 
@@ -19,41 +19,24 @@ const OrderDetails = ( props ) => {
         shippingAddress ,
         quantity,
         poNumber, 
-        openModal } = props
+        UOM,
+        closeModal
+         } = props
     return(
    <View style = { { flex:1  }}>
-     <Card style = {{ borderRadius:15 , height:200}}>
+     <Card style = {{ borderRadius:15}}>
           
           <View style = {{ flexDirection:"column" }}>
                     <OrderHeading
                     poNumber  = { poNumber}
-                    onPressMethod = { openModal }
+                    onPressMethod = { closeModal }
+                    label = "close"
                     />
-                    <View style ={{ flexDirection:"row" , paddingLeft:10}}>
-                        <AntDesign
-                        name="barcode"
-                        size = {20} 
-                        color = "orange"
-                        />
-                        <View>
-                            
-                        
-                            <Text style = {{ ...bold_Text , paddingLeft:10}}>product Code</Text>
-                            <Text style = {{ paddingLeft:15}}>{productCode}</Text>
-                        </View>
-                    </View>
+            
+
+
                     
 
-                    <View style = {{ flexDirection:"row" , paddingLeft:10}}>
-                        <FontAwesome
-                                        name = "balance-scale" 
-                                        size = {20} 
-                                        color = "orange"/>
-                        <View>           
-                        <Text style = {{ ...bold_Text , paddingLeft:10} } numberOfLines= {0.5}>Quantity</Text>
-                        <Text style = {{ paddingLeft:15}}>{shippingAddress}</Text>
-                        </View> 
-                    </View>
                     <View style = {{ flexDirection:"row" , paddingLeft:10}}>
                         <Entypo
                                         name = "address" 
@@ -65,13 +48,112 @@ const OrderDetails = ( props ) => {
                         </View> 
                     </View>
                 
+                    
+                    <View style = {{ flexDirection:"row" , paddingLeft:10}}>
+                        <FontAwesome
+                                        name = "calender" 
+                                        size = {20} 
+                                        color = "orange"/>
+                        <View>           
+                        <Text style = {{ ...bold_Text , paddingLeft:10} } numberOfLines= {0.5}>Order Placement Date</Text>
+                        <Text style = {{ paddingLeft:15}}>{dateOfOrder}</Text>
+                        </View> 
+                    </View>
+
+                    <View style = {{ flexDirection:"row" , paddingLeft:10}}>
+                        <Entypo
+                                        name = "shopping-cart" 
+                                        size = {20} 
+                                        color = "orange"/>
+                        <View>           
+                        <Text style = {{ ...bold_Text , paddingLeft:10} } numberOfLines= {0.5}>Items</Text>
+                          <Items
+                          productCode = { productCode}
+                          Quantity = {5 }
+                          UOM = { UOM}
+                          />
+
+<Items
+                          productCode = { productCode}
+                          Quantity = {5 }
+                          UOM = { UOM}
+                          />
+                            <Items
+                          productCode = { productCode}
+                          Quantity = {5 }
+                          UOM = { UOM}
+                          />
+                            <Items
+                          productCode = { productCode}
+                          Quantity = {5 }
+                          UOM = { UOM}
+                          />
+                            <Items
+                          productCode = { productCode}
+                          Quantity = {5 }
+                          UOM = { UOM}
+                          />
+                            <Items
+                          productCode = { productCode}
+                          Quantity = {5 }
+                          UOM = { UOM}
+                          />
+                            <Items
+                          productCode = { productCode}
+                          Quantity = {5 }
+                          UOM = { UOM}
+                          />
+                          <Items
+                          productCode = { productCode}
+                          Quantity = {5 }
+                          UOM = { UOM}
+                          />
+                          <Items
+                          productCode = { productCode}
+                          Quantity = {5 }
+                          UOM = { UOM}
+                          />
+                          <Items
+                          productCode = { productCode}
+                          Quantity = {5 }
+                          UOM = { UOM}
+                          />
+                          <Items
+                          productCode = { productCode}
+                          Quantity = {5 }
+                          UOM = { UOM}
+                          />
+                        </View> 
+
+                    </View>
                 
               
           </View>
+          
           </Card>
          
 
     </View> )
 }
 
+const Items = ( props ) => {
+    const {  productCode , Quantity , UOM} = props
+    return(
+        <View style = {{ flexDirection:"row" , justifyContent:"space-between" }}>
+        <CustomText
+        label = "Product Code"
+        text = { productCode}
+        />
+        <CustomText
+          label = "Quantity"
+          text = { Quantity }/>
+         <CustomText
+            label = "UOM"
+            text = {UOM}
+         />
+    </View>
+    )
+ 
+ 
+}
 export default OrderDetails 

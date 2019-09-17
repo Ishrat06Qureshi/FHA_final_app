@@ -15,7 +15,7 @@ import AllProducts from "../Components/AllProducts";
 import MultiForm from "../Components/multistepForm";
 import Signup from "../Components/NewSignUp"
 import OrderPlacement from "../Components/OrderPlacement"
-
+import  CodeVerify from "../Components/CodeVerification"
 
 
 
@@ -91,11 +91,16 @@ const AppStackNavigator = createStackNavigator({
     screen:OrderPlacement,
     navigationOptions: {
      header: null}
+  },
+  CodeVerify:{
+    screen:CodeVerify,
+    navigationOptions: {
+     header: null}
   }
  
     
 } , 
-{ initialRouteName:"Home",
+{ initialRouteName:"CodeVerify",
   transitionConfig:(nav) => handleCustomTransition(nav),
 defaultNavigationOptions: {
     header: null
