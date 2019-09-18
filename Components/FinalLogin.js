@@ -1,6 +1,6 @@
 import  React , {Component} from 'react';
-import { View,  Image , TouchableOpacity , Text  } from 'react-native';
-
+import { Text, View, StyleSheet, ImageBackground , Image  , TextInput , TouchableOpacity , CheckBox } from 'react-native';
+import {EvilIcons ,AntDesign} from "@expo/vector-icons";
 
 import LoginMiddleware from "../Middleware/LoginMiddleware";
 import { connect } from "react-redux";
@@ -11,7 +11,10 @@ import Button from "./Button";
 import {Red_Button , White_Text} from "../Styles"
 // import Loading from "../Redux/Actions/LoadingAction"
 import validation_functions from "../utils/validation_functions"; 
-import SaveItem from "../Actions/OrderAction"
+import axios from "axios"
+
+
+
 
  class Finalogin extends Component {
   constructor (props){
@@ -22,34 +25,20 @@ import SaveItem from "../Actions/OrderAction"
       notValidate:true
     }
   }
- 
+  
 
 
 
-   handleSubmit = () => {
-
-     
-  // console.log("validity")
-  //  const status =  validation_functions.isFormValid()
-  //  console.log( "status",status )
-  //   // return ( status ? this.setState(({ validity:true })): null)
-    
-  // this.props.navigation.navigate("Home")  
-  // const { email,password } = this.state
-  // const data = {
-  // email,
-  // password
-  // }
-  // this.props.Login( data )
-  // const status = validation_functions.isFormValid()
-  // console.log("status", status )
-
-     const validEmail = validation_functions.showError("email")
-     const validPassword = validation_functions.showError("password")
-     const formValidity = validation_functions.isFormValid(["email" , "password"])
-     console.log("Email validity" , validEmail)
-     console.log("password validity" , validPassword)
-     console.log("form validity" , formValidity)
+   handleLogin = () => {
+       const { email , password } = this.state
+      axios.post("http://13.59.64.244:3000/api/authenticate", { email , password }).then(( response ) => 
+       {
+         if( response.status == 200) {
+          this.props.navigation.navigate("Home")
+         }
+       }).catch ( err => console.log(err.response.data.message))
+      
+       
   }
 
 
@@ -77,15 +66,13 @@ import SaveItem from "../Actions/OrderAction"
   //   console.log("next Props", nextProps )
   // }
 
-  handleSave = ( productId , quantity ) => {
-    this.props.saveItem({productId, quantity})
-  }
+
 
     render() {
   
-    
-    const { token , saveItem  , items } = this.props
-    console.log("items" , items )
+    const {  email , password , checked  , error , credential_error_msg  , validity , notValidate} = this.state
+    const { token } = this.props
+    console.log("token" , token )
     return(
       <View style = {{
         flex:1 , 
@@ -101,9 +88,7 @@ import SaveItem from "../Actions/OrderAction"
                     />
                    <View style = {{  flex:1 ,  justifyContent:"center"  }}>
                        
-                      <TouchableOpacity onPress = {() =>this.handleSave("1122554897", "5")}>
-                        <Text> set Item </Text>
-                      </TouchableOpacity>
+                     
                     
                    <Input
                    label = "EMAIL"
@@ -120,7 +105,7 @@ import SaveItem from "../Actions/OrderAction"
                    errorName = "password" 
                    />  
                   <Button 
-                   onPress = {this.handleNext}
+                   onPress = {this.handleLogin}
                    text = "Login"
                    buttonStyle = {Red_Button}
                    textStyle = { White_Text }
@@ -139,21 +124,14 @@ import SaveItem from "../Actions/OrderAction"
 
 const mapDispatchToProps = ( dispatch ) => {
    return({
-    //  Login:( data ) => dispatch(LoginMiddleware(data )) 
-      saveItem : ( data ) => dispatch(SaveItem(data))
+     Login:( data ) => dispatch(LoginMiddleware(data )) 
    })
 }
 
 const mapStateToProps = ( state ) => {
   console.log("state" , state )
   return({
-    token: state.tokenReducer.token,
-    items:state.orderReducer.items
+    token: state.tokenReducer.token
   })
 }
 export default connect(mapStateToProps , mapDispatchToProps )(Finalogin)
-
-
-
-
-

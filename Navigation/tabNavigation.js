@@ -6,7 +6,7 @@ import Home from "../Components/newHome";
 import Order from "../Components/Order";
 import Logout from "../Components/Logout";
 import Search from "../Components/Search";
-
+import Cart from "../Components/Cart"
 
 const TabBar = createBottomTabNavigator(
     {
@@ -21,7 +21,7 @@ const TabBar = createBottomTabNavigator(
                 <AntDesign name='search1' size={25} color={tintColor} /> )})
             },
             Order:{ 
-            screen : Order , 
+            screen : Cart, 
             navigationOptions : () => ({  tabBarIcon: ({tintColor}) => (
                 <MaterialIcons name = 'add-shopping-cart' size={25} color={tintColor} /> )})
             },

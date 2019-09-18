@@ -27,6 +27,7 @@ const Customer = (  props ) => {
                isSecureTextEntry = { false}
                onChangeText= { handleInputChange}
                errorName = "customerNumber" 
+               keyBoardType = "phone-pad"
                />  
                <Input
                label = "EMAIL"

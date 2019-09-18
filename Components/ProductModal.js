@@ -1,14 +1,18 @@
 import React , { Component } from "react";
-import { View , Text , Image } from "react-native";
+import { View , Text , Image , Keyboard  , ScrollView} from "react-native";
 import { Card} from "native-base"
 import Input from "./Input";
 import CustomText from "./CustomText";
 import Button from "./Button";
 import validation_functions from "../utils/validation_functions"; 
 import { connect } from "react-redux";
-import { bold_Text ,
+import SaveItem from "../Actions/OrderAction"
+import { bold_Text ,    
     White_Square_button  , 
     Red_Text ,
+    Red_Square_button,
+    White_Text
+    
      } from "../Styles";
 
  
@@ -22,18 +26,22 @@ import { bold_Text ,
         validation_functions.updateValidators( fieldName , value )
     
       }
-
+      
 
       handleSave = ( productId , quantity ) => {
-        this.props.saveItem({productId, quantity})
+        const { closeModal } = this.props
+        Keyboard.dismiss()
+        closeModal()
+        this.props.saveItem({productId, quantity , UOM:"foot"})
       }
     render() {
 
-        const { image , productCode , closeModal , items } = this.props
+        const { image , productCode , items ,  closeModal } = this.props
+        const { quantity } = this.state
         
         console.log("items" , items )
         return( <View >
-               <Card style = {{ height:"70%" , borderRadius:"25"}}>
+               <Card style = {{ height: 500, borderRadius:25}}>
                    
                <Image
                  source = {{ uri:image}}
@@ -47,22 +55,33 @@ import { bold_Text ,
                  label = "Product Code"
                  text = { productCode }
                />
+           
+                 
               <Input
                label = "quantity"
                placeHolderText="5"
                isSecureTextEntry = { false}
                onChangeText= { this.handleInputChange}
                errorName = "quantity" 
+               keyBoardType = "phone-pad"
                /> 
-
-               <View style = {{ justifyContent : "flex-end" , flexDirection:"row"}}>
-                  
+   
+               <View style = {{ justifyContent : "flex-end"}}>
+                  <View style = {{ flexDirection:"row" , justifyContent:"space-evenly"}}>
+                    
                <Button
                        buttonStyle = {  White_Square_button }
                        textStyle = { Red_Text }
-                       text  = "Ok"
-                       onPressMethod = { closeModal}
+                       text  = "Add"
+                       onPressMethod = { ()=>this.handleSave( productCode , quantity )}
                       />
+                        <Button
+                       buttonStyle = {  Red_Square_button }
+                       textStyle = { White_Text }
+                       text  = "Cancel"
+                       onPressMethod = {closeModal}
+                      />
+                      </View>
                </View>
                </Card>
         </View>)

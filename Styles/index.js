@@ -31,6 +31,14 @@ export const White_Square_button = {
     borderRadius:5
 
 }
+export const Red_Square_button = {
+    ...square_button,
+    borderColor:"red",
+    borderWidth:1,
+    borderRadius:5,
+    backgroundColor:red
+
+}
 
 export const Heading_Container = {
     justifyContent:"center" ,

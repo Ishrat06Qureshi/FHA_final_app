@@ -20,6 +20,15 @@ const Company = (  props ) => {
       alignItems:"center"
      }}>
              
+
+             <Image
+                  source = {require("../assets/fastening.png")}
+                  style = {{
+                    height:135,
+                    width:"100%",
+                    resizeMode:"contain"
+                  }}
+                />
              
                <View style = {{  justifyContent:"center" }}>
                <Input
@@ -28,20 +37,16 @@ const Company = (  props ) => {
                isSecureTextEntry = { false}
                onChangeText= { handleInputChange}
                errorName = "companyName" 
+               keyBoardType = "default"
                />  
-                <Input
-               label = "OFFICE ADDRESS"
-               placeHolderText="1 Moore Rd,Canada"
-               isSecureTextEntry = { false}
-               onChangeText= { handleInputChange}
-               errorName = "officeAddress" 
-               />  
+                 
                  <Input
                label = "CONTACT PERSON NAME"
                placeHolderText="Dev"
                isSecureTextEntry = { false}
                onChangeText= { handleInputChange}
                errorName = "contactPersonName" 
+               keyBoardType = "default"
                />  
                  <Input
                label = "PHONE NUMBER"
@@ -49,6 +54,7 @@ const Company = (  props ) => {
                isSecureTextEntry = { false}
                onChangeText= { handleInputChange}
                errorName = "phoneNumber" 
+               keyBoardType = "phone-pad"
                />  
               <Button 
                onPressMethod = {handleNext}

@@ -122,7 +122,7 @@ const validators = {
         
         {
           test: (value) => {
-            return value.length == 0
+            return value.length 
           },
           message: 'office address is mandatory',
         },
@@ -142,7 +142,7 @@ const validators = {
         
         {
           test: (value) => {
-            return value.length == 0
+            return value.length 
           },
           message: 'Quantity is required',
         },
@@ -162,7 +162,7 @@ const validators = {
         
         {
           test: (value) => {
-            return value.length == 0
+            return value.length 
           },
           message: 'shipping Address is required',
         },
@@ -171,7 +171,118 @@ const validators = {
       valid: false,
       state: ''
 
-    }
+    },
+    lineOne:{
+      rules: [
+        // {
+        //   test: (value) => {
+        //     return value.length
+        //   },
+        //   message: 'Phone Number is required',
+        // },
+        
+        {
+          test: (value) => {
+            return value.length 
+          },
+          message: 'Address is Required',
+        },
+      ],
+      errors: [],
+      valid: false,
+      state: ''
+
+    },
+    lineTwo:{
+      rules: [
+        // {
+        //   test: (value) => {
+        //     return value.length
+        //   },
+        //   message: 'Phone Number is required',
+        // },
+        
+        {
+          test: (value) => {
+            return value.length 
+          },
+          message: '',
+        },
+      ],
+      errors: [],
+      valid: false,
+      state: ''
+
+    },
+    city:{
+      rules: [
+        // {
+        //   test: (value) => {
+        //     return value.length
+        //   },
+        //   message: 'Phone Number is required',
+        // },
+        
+        {
+          test: (value) => {
+            return value.length 
+          },
+          message: 'city is required',
+        },
+        {
+          test: /^[a-zA-Z\s]+$/,
+          message: 'city can only contain alphabets',
+        },
+      ],
+      errors: [],
+      valid: false,
+      state: ''
+
+    },
+    province:{
+      rules: [
+        // {
+        //   test: (value) => {
+        //     return value.length
+        //   },
+        //   message: 'Phone Number is required',
+        // },
+        
+        {
+          test: (value) => {
+            return value.length 
+          },
+          message: 'province is required',
+        },
+        {
+          test: /^[a-zA-Z\s]+$/,
+          message: 'province can only contain alphabets',
+        },
+      ],
+      errors: [],
+      valid: false,
+      state: ''
+
+    },
+    postalCode:{
+      rules: [
+      
+        
+        {
+          test: (value) => {
+            return value.length 
+          },
+          message: 'Postal code is required',
+        },
+        
+      ],
+      errors: [],
+      valid: false,
+      state: ''
+
+    },
+
+
   };
   
   export default validators;
