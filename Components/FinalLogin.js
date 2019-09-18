@@ -1,6 +1,6 @@
 import  React , {Component} from 'react';
-import { Text, View, StyleSheet, ImageBackground , Image  , TextInput , TouchableOpacity , CheckBox } from 'react-native';
-import {EvilIcons ,AntDesign} from "@expo/vector-icons";
+import { View,  Image , TouchableOpacity , Text  } from 'react-native';
+
 
 import LoginMiddleware from "../Middleware/LoginMiddleware";
 import { connect } from "react-redux";
@@ -11,6 +11,7 @@ import Button from "./Button";
 import {Red_Button , White_Text} from "../Styles"
 // import Loading from "../Redux/Actions/LoadingAction"
 import validation_functions from "../utils/validation_functions"; 
+import SaveItem from "../Actions/OrderAction"
 
  class Finalogin extends Component {
   constructor (props){
@@ -76,13 +77,15 @@ import validation_functions from "../utils/validation_functions";
   //   console.log("next Props", nextProps )
   // }
 
-
+  handleSave = ( productId , quantity ) => {
+    this.props.saveItem({productId, quantity})
+  }
 
     render() {
   
-    const {  email , password , checked  , error , credential_error_msg  , validity , notValidate} = this.state
-    const { token } = this.props
-    console.log("token" , token )
+    
+    const { token , saveItem  , items } = this.props
+    console.log("items" , items )
     return(
       <View style = {{
         flex:1 , 
@@ -98,7 +101,9 @@ import validation_functions from "../utils/validation_functions";
                     />
                    <View style = {{  flex:1 ,  justifyContent:"center"  }}>
                        
-                     
+                      <TouchableOpacity onPress = {() =>this.handleSave("1122554897", "5")}>
+                        <Text> set Item </Text>
+                      </TouchableOpacity>
                     
                    <Input
                    label = "EMAIL"
@@ -134,14 +139,16 @@ import validation_functions from "../utils/validation_functions";
 
 const mapDispatchToProps = ( dispatch ) => {
    return({
-     Login:( data ) => dispatch(LoginMiddleware(data )) 
+    //  Login:( data ) => dispatch(LoginMiddleware(data )) 
+      saveItem : ( data ) => dispatch(SaveItem(data))
    })
 }
 
 const mapStateToProps = ( state ) => {
   console.log("state" , state )
   return({
-    token: state.tokenReducer.token
+    token: state.tokenReducer.token,
+    items:state.orderReducer.items
   })
 }
 export default connect(mapStateToProps , mapDispatchToProps )(Finalogin)

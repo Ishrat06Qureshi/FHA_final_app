@@ -100,7 +100,7 @@ const AppStackNavigator = createStackNavigator({
  
     
 } , 
-{ initialRouteName:"CodeVerify",
+{ initialRouteName:"Home",
   transitionConfig:(nav) => handleCustomTransition(nav),
 defaultNavigationOptions: {
     header: null
