@@ -281,6 +281,23 @@ const validators = {
       state: ''
 
     },
+    verifyCode:{
+      rules: [
+      
+        
+        {
+          test: (value) => {
+            return value.length 
+          },
+          // message: 'Postal code is required',
+        },
+        
+      ],
+      errors: [],
+      valid: false,
+      state: ''
+
+    }
 
 
   };

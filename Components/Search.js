@@ -2,24 +2,26 @@ import * as React from "react";
 import { Container , Header  , Content, Form , Item , Label , Input, Button , Picker   , Icon, Body , 
 Card   } from "native-base";
 import { View , Text , FlatList , TouchableOpacity,Keyboard } from "react-native";
+import { NavigationEvents } from 'react-navigation';
 import axios from "axios";
 import Products from "./Products";
 
-
+const initialState = {
+  data : [],
+  activeSuggestion: 0,  
+  filteredSuggestions: [],
+  showSuggestions: false,
+  userInput: '',
+  filterList:[],
+  selectedValue :"",
+  searchedProducts:[]
+}
 
 export default class Search extends React.Component {
-    state = {
-        data : [],
-        activeSuggestion: 0,  
-        filteredSuggestions: [],
-        showSuggestions: false,
-        userInput: '',
-        filterList:[],
-        selectedValue :"",
-        searchedProducts:[]
-       
-    }
+    state = {...initialState }
+     
 
+    
     getProduct = ( productId) => {
       Keyboard.dismiss()
       axios.get(`http://13.59.64.244:3000/api/products/${productId}`).
@@ -78,7 +80,9 @@ export default class Search extends React.Component {
 
    _renderItem  = ({ item }) => {
     return( 
-    
+     
+  
+  
      
      
        <TouchableOpacity  onPress = {() => this.selected( item )}>
@@ -104,6 +108,9 @@ export default class Search extends React.Component {
         <Container>
      
         <Content>
+        <NavigationEvents
+      onDidBlur={() => this.setState(({...initialState}))}
+      />
           <Item  style = {{ marginTop: 50}}>
             <Icon active name='search' />
             <Input 

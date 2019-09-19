@@ -12,7 +12,7 @@ const  resetValidators = () => {
   
 
   const updateValidators = (fieldName, value) => {
-    console.log("fielName", fieldName , "value" , value)
+    
     validators[fieldName].errors = [];
     validators[fieldName].state = value;
     validators[fieldName].valid = true;
@@ -34,7 +34,7 @@ const  resetValidators = () => {
 
 
   const displayValidationErrors = ( fieldName ) => {
-    console.log("display fucntion" , fieldName )
+    
     const validator =  validators[fieldName];
     const { errors } = validator
      return ( <Text style={{ 
@@ -47,7 +47,7 @@ const  resetValidators = () => {
   
     let status = true;
     Object.keys(validators).forEach((field) => {
-      console.log("field", field)
+
        if (fieldNames.includes(field) )
        {
             if (!validators[field].valid) { 

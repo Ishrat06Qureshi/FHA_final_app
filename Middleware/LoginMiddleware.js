@@ -10,11 +10,11 @@ const LoginMiddleware = ( data ) => {
     console.log( data )
     const { email , password } = data
         return ( dispatch ) => {
-                        return axios.post(`${URL.Authenticate_URL}` , { email , password } ) 
+                        return axios.post("http://13.59.64.244:3000/api/authenticate" , { email , password } ) 
                         .then(( response ) =>  
-                        {   console.log(response )
+                        {   
                             dispatch( TokenAction.TOKEN_SAVE_ACTION(response.data.token))
-                            dispatch( UserDataAction.SAVE_USER_DATA_ACTION( response.data.userID))
+                            dispatch( UserDataAction.SAVE_USER_DATA_ACTION( response.data))
                         }).catch ( err => {
                             console.log( err)
                         })

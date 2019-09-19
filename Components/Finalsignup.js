@@ -55,11 +55,13 @@ navigateToLogin = () => {
       companyName,
       officeAddress,
       contactPersonName,
-      phoneNumber} = this.state
+      phoneNumber , lineOne , lineTwo , city, province , postalCode } = this.state
    
-    axios.post("http://13.59.64.244:3000/api/register" , { email , customerNumber , password , companyName , officeAddress , contactPersonName , phoneNumber  })
+    axios.post("http://13.59.64.244:3000/api/register" , 
+    { email , customerNumber , password , companyName , officeAddress:`${lineOne} , ${city} , ${province} , ${postalCode}`  , 
+    contactPersonName , phoneNumber  })
     .then(( response ) =>  
-    {
+    {  console.log(response)
       if(response.data.message === "Done") {
         this.props.navigation.navigate("CodeVerify")
       }
@@ -89,13 +91,7 @@ navigateToLogin = () => {
   
   render() {
 
-    const {    email,
-    customerNumber,
-    password,
-    companyName,
-    officeAddress,
-    contactPersonName,
-    phoneNumber, StepOne , StepTwo } = this.state
+    const {  StepOne , StepTwo } = this.state
       console.log("StepOne" , StepOne)
       console.log("StepTwo" , StepTwo)
     return(

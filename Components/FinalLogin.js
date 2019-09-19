@@ -1,51 +1,49 @@
 import  React , {Component} from 'react';
-import { Text, View, StyleSheet, ImageBackground , Image  , TextInput , TouchableOpacity , CheckBox } from 'react-native';
-import {EvilIcons ,AntDesign} from "@expo/vector-icons";
+import {View,  Image  } from 'react-native';
+import { Spinner } from "native-base"
 
 import LoginMiddleware from "../Middleware/LoginMiddleware";
 import { connect } from "react-redux";
 import Input from "./Input"
-import Customer from './Customer';
-import Company from "./Company";
+
 import Button from "./Button";
-import {Red_Button , White_Text} from "../Styles"
+
 // import Loading from "../Redux/Actions/LoadingAction"
 import validation_functions from "../utils/validation_functions"; 
-import axios from "axios"
+import { NavigationEvents } from 'react-navigation';
 
-
+import { disable_Button_Style ,
+  disable_Text_Style , 
+  enable_Button_Style ,
+   enable_Text_Style} from "../Styles"   
+const initialState = {
+  email:"",
+      password:"",
+}
 
 
  class Finalogin extends Component {
   constructor (props){
     super(props)
-    this.state = {
-      email:"",
-      password:"",
-      notValidate:true
-    }
+    this.state = {...initialState}
   }
   
 
 
 
    handleLogin = () => {
-       const { email , password } = this.state
-      axios.post("http://13.59.64.244:3000/api/authenticate", { email , password }).then(( response ) => 
-       {
-         if( response.status == 200) {
-          this.props.navigation.navigate("Home")
-         }
-       }).catch ( err => console.log(err.response.data.message))
-      
+      const { token , Login  }  = this.props 
+       const { email , password }  =this.state
+    
+      Login({email , password} ) 
+      this.props.navigation.navigate("Home")
+    
        
   }
 
 
 
-  navigateToLogin = () => {
-    this.props.navigation.navigate("Finalsignup")
-  }
+  
 
   handleInputChange = ( fieldName , value) => {
     this.setState(({ [fieldName] : value}))
@@ -53,31 +51,23 @@ import axios from "axios"
 
   }
 
-  handleNext = () => {
-    console.log("good")
-  }
-  callRedux  = () => {
-    // const { dispatch } = this.props
-    // dispatch(Loading(true))
-
-  }
   
-  // componentWillReceiveProps( nextProps ) {
-  //   console.log("next Props", nextProps )
-  // }
 
 
 
     render() {
   
-    const {  email , password , checked  , error , credential_error_msg  , validity , notValidate} = this.state
+    const disable = validation_functions.isFormValid(["email","password" ])
     const { token } = this.props
-    console.log("token" , token )
+    console.log(this.state)
     return(
       <View style = {{
         flex:1 , 
         justifyContent:"center" ,
         alignItems:"center" }}>
+                <NavigationEvents
+      onDidBlur={() => this.setState(({...initialState}))}
+      />
                     <Image
                       source = {require("../assets/fastening.png")}
                       style = {{
@@ -100,16 +90,16 @@ import axios from "axios"
                      <Input
                    label = "PASSWORD"
                    placeHolderText="*******"
-                   isSecureTextEntry = { false}
+                   isSecureTextEntry = { true }
                    onChangeText= { this.handleInputChange}
                    errorName = "password" 
                    />  
                   <Button 
-                   onPress = {this.handleLogin}
+                   onPressMethod = { this.handleLogin}
                    text = "Login"
-                   buttonStyle = {Red_Button}
-                   textStyle = { White_Text }
-                   
+                   buttonStyle = {disable ? enable_Button_Style : disable_Button_Style}
+                   textStyle = { disable ? enable_Text_Style  :disable_Text_Style }
+                   disable = { disable}
                    />
                    </View>
       </View>
@@ -129,7 +119,7 @@ const mapDispatchToProps = ( dispatch ) => {
 }
 
 const mapStateToProps = ( state ) => {
-  console.log("state" , state )
+ 
   return({
     token: state.tokenReducer.token
   })

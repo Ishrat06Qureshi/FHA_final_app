@@ -11,14 +11,23 @@ import { bold_Text ,
     White_Square_button  , 
     Red_Text ,
     Red_Square_button,
-    White_Text
+    White_Text,
+    disable_Button_Style ,
+  disable_Text_Style , 
+  enable_Button_Style ,
+   enable_Text_Style
     
      } from "../Styles";
+  
+     
 
+const  initialState = {
+  quantity :""
+}
  
  class ProductModal extends Component {
     state = {
-        quantity :""
+        ...initialState
     }
     
     handleInputChange = ( fieldName , value) => {
@@ -31,16 +40,19 @@ import { bold_Text ,
       handleSave = ( productId , quantity ) => {
         const { closeModal } = this.props
         Keyboard.dismiss()
-        closeModal()
+         this.setState(({...initialState}) , ()=> closeModal())
         this.props.saveItem({productId, quantity , UOM:"foot"})
       }
     render() {
-
+      const disable = validation_functions.isFormValid([ "quantity" ])
         const { image , productCode , items ,  closeModal } = this.props
         const { quantity } = this.state
         
         console.log("items" , items )
         return( <View >
+             <NavigationEvents
+      onDidBlur={() => this.setState(({...initialState}))}
+      />
                <Card style = {{ height: 500, borderRadius:25}}>
                    
                <Image
@@ -74,12 +86,16 @@ import { bold_Text ,
                        textStyle = { Red_Text }
                        text  = "Add"
                        onPressMethod = { ()=>this.handleSave( productCode , quantity )}
+                       buttonStyle = {disable ? [enable_Button_Style, White_Square_button] :[ disable_Button_Style , White_Square_button ]}
+                       textStyle = { disable ? enable_Text_Style    :disable_Text_Style }
+                       disable = { disable}
                       />
                         <Button
-                       buttonStyle = {  Red_Square_button }
-                       textStyle = { White_Text }
+                       buttonStyle = {  White_Square_button}
+                       textStyle = { Red_Text }
                        text  = "Cancel"
                        onPressMethod = {closeModal}
+                       disable = {true}
                       />
                       </View>
                </View>

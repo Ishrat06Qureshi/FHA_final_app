@@ -100,7 +100,7 @@ const AppStackNavigator = createStackNavigator({
  
     
 } , 
-{ initialRouteName:"Finalsignup",
+{ initialRouteName:"NewLogin",
   transitionConfig:(nav) => handleCustomTransition(nav),
 defaultNavigationOptions: {
     header: null

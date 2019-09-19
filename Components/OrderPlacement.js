@@ -67,21 +67,7 @@ class OrderPlacement extends Component {
             <Text style = { Heading_style }> Place Order</Text>
             </View>
              
-               <CustomText
-                 label = "product Code"
-                 text =  { productCode}
-               />
-               <CustomText
-                 label = "Unit of Measurement ( UOM )"
-                 text =  { UOM ? UOM : "foot"}
-               />
-                   <Input
-               label = "quantity"
-               placeHolderText="5"
-               isSecureTextEntry = { false}
-               onChangeText= { this.handleInputChange}
-               errorName = "quantity" 
-               /> 
+              
                 <Text style = { bold_Text }> Shipping address </Text>
                   <View style  ={{ flexDirection:"row" , justifyContent:"space-around" , marginTop:20 , marginBottom:30}}>
                      <Button  
@@ -112,13 +98,6 @@ class OrderPlacement extends Component {
                   }
                    
                   
-                   {/* { this.differentOfficeAddress ? <Input
-                       label = ""
-                       placeHolderText="shipping address"
-                       isSecureTextEntry = { false}
-                       onChangeText= { this.handleInputChange}
-                       errorName = "shippingAddress" 
-                   /> : null } */}
                
              <Button
                        buttonStyle = {  Red_Button }

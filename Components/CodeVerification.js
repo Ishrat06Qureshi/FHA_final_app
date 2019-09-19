@@ -53,6 +53,7 @@ export default class CodeVerify extends Component {
                       isSecureTextEntry = { false}
                       onChangeText= { this.handleInputChange} 
                       errorName = "verifyCode" 
+                      keyBoardType = "phone-pad"
                       />
                </View>
                 }
