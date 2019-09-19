@@ -2,9 +2,14 @@ import React from "react";
 import { View , Image  } from "react-native";
 import Input from "./Input"
 import Button from "./Button"
-import {  Red_Button , White_Text} from "../Styles";
+import { disable_Button_Style ,
+  disable_Text_Style , 
+  enable_Button_Style ,
+   enable_Text_Style} from "../Styles"
+import validation_functions from "../utils/validation_functions"; 
 const Address = ( props ) => {
     const { handleInputChange , handleNext } = props 
+    const disable = validation_functions.isFormValid(["lineOne","city","province" , "postalCode" ])
 return(
   <View style = {{
     flex:1 , 
@@ -68,9 +73,9 @@ return(
           <Button 
            onPressMethod = { handleNext }
            text = "Submit"
-           buttonStyle = {Red_Button}
-           textStyle = { White_Text}
-           
+           buttonStyle = {disable ? enable_Button_Style : disable_Button_Style}
+           textStyle = { disable ? enable_Text_Style  :disable_Text_Style}
+           disable = { disable}
            />
           </View>
           </View>

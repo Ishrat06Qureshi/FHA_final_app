@@ -1,10 +1,11 @@
-import React , {  Component } from "react"
+import React from "react"
 import { View , Text ,  TouchableOpacity } from "react-native";
-import {Red_Button , White_Text} from "../Styles"
+
 
 const Button  = ( props ) => {
-   const { onPressMethod  , text , buttonStyle, textStyle } = props 
-  return ( <TouchableOpacity style = { buttonStyle} onPress = {  onPressMethod}>
+   const { onPressMethod  , text , buttonStyle, textStyle , disable } = props 
+  return ( <TouchableOpacity style = { buttonStyle} onPress = {  onPressMethod} 
+  disabled = { disable? false: true}>
      <Text style ={ textStyle } > {text}</Text> 
    </TouchableOpacity> )
 

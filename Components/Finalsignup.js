@@ -14,7 +14,7 @@ import Address  from "./AddressComponent"
 export default class Finalsignup extends React.Component {
 
   state = {
-    StepOpen:true,
+    StepOne:true,
     StepTwo:true,
     email:"",
     customerNumber:"",
@@ -77,9 +77,15 @@ navigateToLogin = () => {
     
   }
   
-  handleNext = () => {
-    this.setState(({ StepOpen:false})) 
+  JumpStepTwo = () => {
+    this.setState(({ StepOne:false})) 
   }
+
+  JumpStepThree = () => {
+    this.setState(({ StepTwo:false})) 
+  }
+
+
   
   render() {
 
@@ -89,26 +95,33 @@ navigateToLogin = () => {
     companyName,
     officeAddress,
     contactPersonName,
-    phoneNumber, StepOpen} = this.state
-      console.log("information" , email, customerNumber,password,companyName,officeAddress,contactPersonName , phoneNumber )
+    phoneNumber, StepOne , StepTwo } = this.state
+      console.log("StepOne" , StepOne)
+      console.log("StepTwo" , StepTwo)
     return(
-      <View style ={{  flex:1}}>    
-      <Address
-      handleInputChange = {this.handleInputChange}
-      handleNext = {this.handleNext}
-      />
-          {/* { StepOpen ? 
+      <View style ={{  flex:1}}>   
+
+      
+      
+          { StepOne ? 
           <Customer
           handleInputChange = { this.handleInputChange}
-          handleNext = { this.handleNext}
-          />:  
+          handleNext = { this.JumpStepTwo}
+          />:  StepTwo ? 
           
           <Company
           handleInputChange = { this.handleInputChange}
-          handleNext = { this.post}
+          handleNext = { this.JumpStepThree}
+          /> : <Address
+          handleInputChange = {this.handleInputChange}
+          handleNext = {this.post}
           />
           
-             } */}
+             }
+             {/* <Customer
+              handleInputChange = { this.handleInputChange}
+              handleNext = { this.JumpStepTwo}
+             /> */}
       
         </View> 
     

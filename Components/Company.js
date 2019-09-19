@@ -1,14 +1,20 @@
 import React , { Component } from "react";
-import { View  , KeyboardAvoidingView } from "react-native";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { View  , Image } from "react-native";
+
 import  Input from "./Input";
-import Button from "./Button"
-import {White_Button , Red_Text} from "../Styles"
+import Button from "./Button";
+import { disable_Button_Style ,
+   disable_Text_Style , 
+   enable_Button_Style ,
+    enable_Text_Style} from "../Styles"
+
+    import validation_functions from "../utils/validation_functions"; 
 const Company = (  props ) => {
     
     
  const { handleInputChange , handleNext} = props
- console.log("onpress" , props.handleNext)
+ 
+ const disable = validation_functions.isFormValid(["companyName","contactPersonName","phoneNumber" ])
   return(
       
   
@@ -59,9 +65,9 @@ const Company = (  props ) => {
               <Button 
                onPressMethod = {handleNext}
                text = "Submit"
-               buttonStyle = {White_Button}
-               textStyle = { Red_Text}
-               
+               buttonStyle = {disable ? enable_Button_Style : disable_Button_Style}
+               textStyle = { disable ? enable_Text_Style  :disable_Text_Style}
+               disable = { disable }
                />
                </View>
                             

@@ -70,8 +70,22 @@ export const red_Color_Button = {
     backgroundColor:"#DA011D"
 }
 
+export const disable_Button_Style = {
+    ...White_Button,
+  
+}
 
 
+export const enable_Button_Style = {
+    ...Red_Button,
+   
+}
+export const disable_Text_Style = {
+    ...Red_Text
+}
+export const enable_Text_Style = {
+    ...White_Text
+}
 export const bold_Text = {
     fontWeight: 'bold'
 }
@@ -127,7 +141,7 @@ export const label_styles = {
 export const Input_styles = {
     paddingTop: 10,
            
-            paddingBottom: 10,
+            // paddingBottom: 10,
             paddingLeft: 0,
             color: '#424242',
             borderBottomWidth:0.5,
