@@ -10,30 +10,32 @@ import Button from "./Button";
 import Company from "./Company";
 import Customer from "./Customer";
 import Address  from "./AddressComponent"
+import { NavigationEvents } from 'react-navigation';
 
-export default class Finalsignup extends React.Component {
+const initialState = {
+  StepOne:true,
+  StepTwo:true,
+  email:"",
+  customerNumber:"",
+  password:"",
+  companyName:"",
+  officeAddress:"",
+  contactPersonName:"",
+  phoneNumber:"",
+  lineOne:"",
+  lineTwo:"",
+  city:"",
+  province:"",
+  postalCode:"",
+  serverError:"",
+  isLoading : false
+}
+export default class Finalsignup extends React.Component {   
 
-  state = {
-    StepOne:true,
-    StepTwo:true,
-    email:"",
-    customerNumber:"",
-    password:"",
-    companyName:"",
-    officeAddress:"",
-    contactPersonName:"",
-    phoneNumber:"",
-    lineOne:"",
-    lineTwo:"",
-    city:"",
-    province:"",
-    postalCode:"",
-    serverError:"",
-    isLoading : false
-  }
+  state = {...initialState}
 
   
-
+  
  
 
  handleInputChange = ( fieldName , value) => {
@@ -91,26 +93,51 @@ navigateToLogin = () => {
   
   render() {
 
-    const {  StepOne , StepTwo } = this.state
-      console.log("StepOne" , StepOne)
-      console.log("StepTwo" , StepTwo)
+    const {  StepOne , StepTwo , 
+      email,
+    customerNumber,
+    password,
+    companyName,
+    officeAddress,
+    contactPersonName,
+    phoneNumber,
+    lineOne,
+    lineTwo,
+    city,
+    province,
+    postalCode, } = this.state
+     
     return(
       <View style ={{  flex:1}}>   
 
-      
+<NavigationEvents
+      onDidBlur={() => this.setState(({...initialState}))}
+      />
       
           { StepOne ? 
           <Customer
           handleInputChange = { this.handleInputChange}
           handleNext = { this.JumpStepTwo}
+          customerNumber = {customerNumber}
+          email = { email }
+          password = { password }
+
           />:  StepTwo ? 
           
           <Company
           handleInputChange = { this.handleInputChange}
           handleNext = { this.JumpStepThree}
+          companyName = { companyName }
+          contactPersonName = {contactPersonName}
+          phoneNumber ={ phoneNumber}
+
           /> : <Address
           handleInputChange = {this.handleInputChange}
           handleNext = {this.post}
+          lineOne = { lineOne }
+          city = { city }
+          province = { province }
+          postalCode = { postalCode }
           />
           
              }

@@ -5,7 +5,7 @@ import Button from "./Button"
 import { disable_Button_Style , disable_Text_Style , enable_Button_Style , enable_Text_Style} from "../Styles"
 import validation_functions from "../utils/validation_functions"; 
 const Customer = (  props ) => {
- const { handleInputChange , handleNext} = props
+ const { handleInputChange , handleNext ,  customerNumber ,email ,password  } = props
  const disable = validation_functions.isFormValid(["email","customerNumber","password" ])
   return( 
   <View style = {{
@@ -30,6 +30,7 @@ const Customer = (  props ) => {
                onChangeText= { handleInputChange}
                errorName = "customerNumber" 
                keyBoardType = "phone-pad"
+               value = {customerNumber}
                />  
                <Input
                label = "EMAIL"
@@ -37,13 +38,15 @@ const Customer = (  props ) => {
                isSecureTextEntry = { false}
                onChangeText= { handleInputChange} 
                errorName = "email" 
+               value = { email }
                />
                  <Input
                label = "PASSWORD"
                placeHolderText="*******"
-               isSecureTextEntry = { false}
+               isSecureTextEntry = {true}
                onChangeText= { handleInputChange}
                errorName = "password" 
+               value = { password }
                />  
               <Button 
                onPressMethod  = {handleNext}

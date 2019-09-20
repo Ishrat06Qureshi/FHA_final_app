@@ -6,7 +6,8 @@ import CustomText from "./CustomText";
 import Button from "./Button";
 import validation_functions from "../utils/validation_functions"; 
 import { connect } from "react-redux";
-import SaveItem from "../Actions/OrderAction"
+import SaveItem from "../Actions/OrderAction";
+
 import { bold_Text ,    
     White_Square_button  , 
     Red_Text ,
@@ -31,7 +32,7 @@ const  initialState = {
     }
     
     handleInputChange = ( fieldName , value) => {
-        this.setState(({ [fieldName] : value}))
+        this.setState(({ [fieldName] : value.trim()}))
         validation_functions.updateValidators( fieldName , value )
     
       }
@@ -50,9 +51,9 @@ const  initialState = {
         
         console.log("items" , items )
         return( <View >
-             <NavigationEvents
+             {/* <NavigationEvents
       onDidBlur={() => this.setState(({...initialState}))}
-      />
+      /> */}
                <Card style = {{ height: 500, borderRadius:25}}>
                    
                <Image

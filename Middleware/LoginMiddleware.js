@@ -1,8 +1,8 @@
 import TokenAction from "../Actions/tokenAction";
 import UserDataAction from "../Actions/UserDataAction";
-import ErrorAction from "../Actions/errorAction";
+import SaveError from "../Actions/ErrorAction";
 import axios from "axios";
-import URL from "../urls"
+
 
 
 
@@ -16,7 +16,8 @@ const LoginMiddleware = ( data ) => {
                             dispatch( TokenAction.TOKEN_SAVE_ACTION(response.data.token))
                             dispatch( UserDataAction.SAVE_USER_DATA_ACTION( response.data))
                         }).catch ( err => {
-                            console.log( err)
+                            console.log( err.response.data.message)
+                            dispatch( SaveError( {message:err.response.data.message}))
                         })
                     } 
 }

@@ -11,7 +11,7 @@ import AddressForm from "./AddressForm"
 
 
 const Address = ( props ) => {
-    const { handleInputChange , handleNext } = props 
+    const { handleInputChange , handleNext , lineOne , city , province , postalCode  } = props 
     const disable = validation_functions.isFormValid(["lineOne","city","province" , "postalCode" ])
 return(
   <View style = {{
@@ -36,6 +36,7 @@ return(
     onChangeText= { handleInputChange}
     errorName = "lineOne" 
     keyBoardType = "default"
+    value = { lineOne }
     />  
       {/* <Input
     label = "Line 2"
@@ -52,6 +53,7 @@ return(
     onChangeText= { handleInputChange}
     errorName = "city" 
     keyBoardType = "default"
+    value = { city }
     />  
 
         <Input
@@ -61,6 +63,7 @@ return(
           onChangeText= { handleInputChange}
           errorName = "province" 
           keyBoardType = "default"
+          value = { province }
           />  
             <Input
           label = "Postal Code"
@@ -69,6 +72,7 @@ return(
           onChangeText= { handleInputChange}
           errorName = "postalCode" 
           keyBoardType = "default"
+          value = { postalCode }
           />  
           
              

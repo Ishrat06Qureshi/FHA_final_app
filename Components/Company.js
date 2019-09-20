@@ -12,7 +12,7 @@ import { disable_Button_Style ,
 const Company = (  props ) => {
     
     
- const { handleInputChange , handleNext} = props
+ const { handleInputChange , handleNext , companyName , contactPersonName , phoneNumber } = props
  
  const disable = validation_functions.isFormValid(["companyName","contactPersonName","phoneNumber" ])
   return(
@@ -44,6 +44,7 @@ const Company = (  props ) => {
                onChangeText= { handleInputChange}
                errorName = "companyName" 
                keyBoardType = "default"
+               value = { companyName}
                />  
                  
                  <Input
@@ -53,6 +54,7 @@ const Company = (  props ) => {
                onChangeText= { handleInputChange}
                errorName = "contactPersonName" 
                keyBoardType = "default"
+               value = { contactPersonName }
                />  
                  <Input
                label = "PHONE NUMBER"
@@ -61,6 +63,7 @@ const Company = (  props ) => {
                onChangeText= { handleInputChange}
                errorName = "phoneNumber" 
                keyBoardType = "phone-pad"
+               value = { phoneNumber }
                />  
               <Button 
                onPressMethod = {handleNext}

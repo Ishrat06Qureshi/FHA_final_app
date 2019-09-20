@@ -11,7 +11,9 @@ const Input = ( props ) => {
           keyBoardType ,
            onChangeText  , 
            errorName,
-           defaultAnswer , edit} = props
+           defaultAnswer ,
+            edit , 
+        value} = props
         
    return( <View style = {{ alignContent:"center"}}>
           <Text style = { label_styles}>
@@ -27,6 +29,7 @@ const Input = ( props ) => {
           editable = { edit }
           keyboardType = { keyBoardType}
           style = { Input_styles }
+          value = {value }
            
           />
            {validation_functions.displayValidationErrors(errorName)}

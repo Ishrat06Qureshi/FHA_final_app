@@ -12,7 +12,12 @@ const orderReducer = ( state = initialOrderState, action ) => {
              items: [...state.items,action.item]
          })
      }
-
+     case actionTypes.EMPTY_ITEMS : {
+        return({
+            ...state,
+            items: []
+        })
+    }
      default:
          return state 
  }

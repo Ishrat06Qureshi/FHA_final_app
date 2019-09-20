@@ -1,16 +1,25 @@
-import ErrorAction from "../Actions/errorAction";
-const ErrorReducer = ( state = {} , action ) => {
- switch( action.type) {
-     case ErrorAction.Error:{
-             return({
-                   ...state, 
-                   ErrorMessage:action.ErrorMessage
-             })
-         }
+import * as actionTypes from "../Actions/actionTypes";
 
+const initialOrderState = {
+    error:{ isError:false,
+        message:""}  
+    
+}
+const ErrorReducer = ( state = initialOrderState, action ) => {
+ switch(action.type) {
+     case actionTypes.SAVE_ERROR : {
+         console.log(action)
+         return({
+             ...state,
+             error:{  isError:true,
+                message:action.error.message}
+            
+             
+         })
+     }
+   
      default:
-         return state
+         return state 
  }
 }
-
 export default ErrorReducer

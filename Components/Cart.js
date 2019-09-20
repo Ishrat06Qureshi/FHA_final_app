@@ -1,5 +1,5 @@
 import React , { Component } from "react";
-import { View , Text  , FlatList } from "react-native";
+import { View , Text  , FlatList , Alert  } from "react-native";
 import { connect } from "react-redux";
 import CustomText from "./CustomText";
 import { Heading_style , Red_Button , White_Text , 
@@ -12,6 +12,8 @@ import validation_functions from "../utils/validation_functions";
 import AddressForm from "./AddressForm";
 import axios from "axios"
 import { NavigationEvents } from 'react-navigation';
+import Input from "./Input";
+import DeleteItem from "../Actions/EmptyOrder"
 
 const initialState = {
   orderPlace:false,
@@ -26,7 +28,7 @@ class Cart extends Component {
     
 
    handleInputChange = ( fieldName , value) => {
-    this.setState(({ [fieldName] : value}))
+    this.setState(({ [fieldName] : value.trim()}))
     validation_functions.updateValidators( fieldName , value )
   
   }
@@ -39,22 +41,36 @@ class Cart extends Component {
     }
 
     placeOrder = () => {
-      const { items , userData  } = this.props
+      const { items , userData , DeleteItem  } = this.props
       console.log("user data inside place Order" , userData )
       axios.post("http://13.59.64.244:3000/api/order" , {createdBy:userData.userID , shippingAddress:userData.officeAddress , productDetail:items}).
       then(( response) => {
         if ( response.status === 200) {
-          alert("Thanks for Ordering FHA will reach you out shortly")
+          DeleteItem()
+          Alert.alert(
+            'Alert Title',
+            'My Alert Msg',
+            [
+              
+              
+              {text: 'OK', onPress: () => this.props   .navigation.navigate("Home")},
+            ],
+            {cancelable: false},
+          );
         }
       } ).catch ( err => console.log(err.response.data))
     }
  render() {
 
   
-     const { orderPlace } = this.state
+     const { orderPlace ,
+        lineOne,
+     city,
+     province,
+     postalCode } = this.state
      const disable = validation_functions.isFormValid(["lineOne","city","province" , "postalCode" ])
      const { items } = this.props
-   
+    console.log( lineOne , city , province , postalCode )
       return(
        
         
@@ -66,16 +82,58 @@ class Cart extends Component {
               <View style = {{ justifyContent:"center" , alignSelf:"center" , marginTop:50 , marginBottom:25}}>
             <Text style = { Heading_style }> Place Order</Text>
             </View>
-                <AddressForm
-                 handleInputChange = { this.handleInputChange}
-                />
-                 <Button 
-                   onPressMethod = { this.placeOrder}
-                   text = "Order"
-                   buttonStyle = {disable ? enable_Button_Style : disable_Button_Style}
-                   textStyle = { disable ? enable_Text_Style  :disable_Text_Style }
-                   disable = { disable}
-                   />
+            <View style = {{  justifyContent:"center" }}>
+             
+             <Input
+      label = "Line 1"
+      placeHolderText=""
+      isSecureTextEntry = { false}
+      onChangeText= { this.handleInputChange}
+      errorName = "lineOne" 
+      keyBoardType = "default"
+      value = { lineOne }
+      />  
+      
+        <Input
+      label = "City"
+      placeHolderText="Toronto"
+      isSecureTextEntry = { false}
+      onChangeText= { this.handleInputChange}
+      errorName = "city" 
+      keyBoardType = "default"
+      value = { city }
+      />  
+  
+          <Input
+            label = "Province"
+            placeHolderText="Alberta"
+            isSecureTextEntry = { false}
+            onChangeText= { this.handleInputChange}
+            errorName = "province" 
+            keyBoardType = "default"
+            value = { province }
+            />  
+              <Input
+            label = "Postal Code"
+            placeHolderText="M4B 1B3"
+            isSecureTextEntry = { false}
+            onChangeText= { this.handleInputChange}
+            errorName = "postalCode" 
+            keyBoardType = "default"
+            value = { postalCode }
+            />  
+            
+               
+               
+            <Button 
+             onPressMethod = { this.placeOrder }
+             text = "Submit"
+             buttonStyle = {disable ? enable_Button_Style : disable_Button_Style}
+             textStyle = { disable ? enable_Text_Style  :disable_Text_Style}
+             disable = { disable}
+             />
+            </View>
+                
              </View> :   <View>
            <View style = {{ justifyContent:"center" , alignSelf:"center" , marginTop:50 , marginBottom:25}}>
             <Text style = { Heading_style }> Cart Details</Text>
@@ -151,4 +209,12 @@ const mapStateToProps = ( state ) => {
       userData:state.UserDataReducer.UserData
     })
   }
-export default connect(mapStateToProps , null )(Cart)
+
+  const mapDispatchToProps = ( dispatch  ) => {
+
+    return({
+      DeleteItem : (  ) => dispatch(DeleteItem())
+   
+    })
+  } 
+export default connect(mapStateToProps , mapDispatchToProps  )(Cart)

@@ -17,7 +17,7 @@ import { disable_Button_Style ,
   enable_Button_Style ,
    enable_Text_Style} from "../Styles"   
 const initialState = {
-  email:"",
+      email:"",
       password:"",
 }
 
@@ -32,11 +32,17 @@ const initialState = {
 
 
    handleLogin = () => {
-      const { token , Login  }  = this.props 
+      const { token , Login ,error }  = this.props 
        const { email , password }  =this.state
     
       Login({email , password} ) 
-      this.props.navigation.navigate("Home")
+      if(!error.message.length){
+        
+          this.props.navigation.navigate("Home")
+      }
+      
+
+
     
        
   }
@@ -46,7 +52,8 @@ const initialState = {
   
 
   handleInputChange = ( fieldName , value) => {
-    this.setState(({ [fieldName] : value}))
+    
+    this.setState(({ [fieldName] : value.trim()}))
     validation_functions.updateValidators( fieldName , value )
 
   }
@@ -60,6 +67,8 @@ const initialState = {
     const disable = validation_functions.isFormValid(["email","password" ])
     const { token } = this.props
     console.log(this.state)
+    const { email , password }  = this.state 
+    
     return(
       <View style = {{
         flex:1 , 
@@ -86,6 +95,7 @@ const initialState = {
                    isSecureTextEntry = { false}
                    onChangeText= { this.handleInputChange} 
                    errorName = "email" 
+                   value = {email }
                    />
                      <Input
                    label = "PASSWORD"
@@ -93,6 +103,7 @@ const initialState = {
                    isSecureTextEntry = { true }
                    onChangeText= { this.handleInputChange}
                    errorName = "password" 
+                   value = {password}
                    />  
                   <Button 
                    onPressMethod = { this.handleLogin}
@@ -119,9 +130,10 @@ const mapDispatchToProps = ( dispatch ) => {
 }
 
 const mapStateToProps = ( state ) => {
- 
+  console.log("state of redux" , state )
   return({
-    token: state.tokenReducer.token
+    token: state.tokenReducer.token,
+    error: state.ErrorReducer.error
   })
 }
 export default connect(mapStateToProps , mapDispatchToProps )(Finalogin)

@@ -1,11 +1,10 @@
-class ErrorAction {
-  static Error = "Error"
-
-  static ErrorAction = ( ErrorMessage ) => {
-     return({
-         type: this.Error,
-         ErrorMessage
-     })
-  }
-}
-export default ErrorAction 
+import * as actionTypes from "../Actions/actionTypes";
+ 
+const SaveError = (  error ) => {
+    return ({
+        type:actionTypes.SAVE_ERROR,
+        error
+    })
+   }
+   
+   export default SaveError
