@@ -20,6 +20,7 @@ import Products from "./Products";
       productCode  = { item.productCode }
       description = { item.description} 
       history = { this.props.history}
+      uri  = {item.imageLink}
     />
     
     )
@@ -58,7 +59,7 @@ import Products from "./Products";
        );
    } 
    componentDidMount ( props ) {
-       console.log("url", this.props.url)
+      
        axios.get(this.props.url).
        then(( response ) => 
        

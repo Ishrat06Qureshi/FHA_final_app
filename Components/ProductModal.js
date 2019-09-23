@@ -40,8 +40,13 @@ const  initialState = {
 
       handleSave = ( productId , quantity ) => {
         const { closeModal } = this.props
+         console.log(productId , quantity )
         Keyboard.dismiss()
-         this.setState(({...initialState}) , ()=> closeModal())
+         this.setState(({...initialState}) , ()=> {
+           validation_functions.resetValidators()
+           closeModal()
+         })
+          console.log(" state of Product",this.state)
         this.props.saveItem({productId, quantity , UOM:"foot"})
       }
     render() {
@@ -49,7 +54,7 @@ const  initialState = {
         const { image , productCode , items ,  closeModal } = this.props
         const { quantity } = this.state
         
-        console.log("items" , items )
+       
         return( <View >
              {/* <NavigationEvents
       onDidBlur={() => this.setState(({...initialState}))}
@@ -69,7 +74,8 @@ const  initialState = {
                  text = { productCode }
                />
            
-                 
+                 <ScrollView keyboardShouldPersistTaps = "always">
+                   
               <Input
                label = "quantity"
                placeHolderText="5"
@@ -78,9 +84,9 @@ const  initialState = {
                errorName = "quantity" 
                keyBoardType = "phone-pad"
                /> 
-   
+               </ScrollView>
                <View style = {{ justifyContent : "flex-end"}}>
-                  <View style = {{ flexDirection:"row" , justifyContent:"space-evenly"}}>
+                  <View style = {{ flexDirection:"row" , justifyContent:"space-evenly" , marginBottom:25}}>
                     
                <Button
                        buttonStyle = {  White_Square_button }
@@ -113,7 +119,7 @@ const mapDispatchToProps = ( dispatch ) => {
  }
  
  const mapStateToProps = ( state ) => {
-   console.log("state" , state )
+  //  console.log("state" , state )
    return({
      token: state.tokenReducer.token,
      items:state.orderReducer.items

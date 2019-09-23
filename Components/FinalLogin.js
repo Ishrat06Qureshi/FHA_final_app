@@ -1,5 +1,5 @@
 import  React , {Component} from 'react';
-import {View,  Image , ScrollView  , Text } from 'react-native';
+import {View,  Image , ScrollView  , Text, Keyboard  } from 'react-native';
 import { Spinner } from "native-base"
 
 import LoginMiddleware from "../Middleware/LoginMiddleware";
@@ -29,14 +29,30 @@ const initialState = {
     this.state = {...initialState}
   }
   
-
-
+   navigateToHome = () => {
+     this.props.navigation.navigate("Home")
+   }
+   OnLoader = () => {
+     this.setState(({ isLoading: true }))
+   }
+   ResetState = () => {
+     validation_functions.resetValidators()
+     this.setState(({...initialState}))
+   }
+   OnLoaderOff = () => {
+     this.setState(({ isLoading : false }))
+   }
 
    handleLogin = () => {
+     Keyboard.dismiss()
       const { token , Login ,error }  = this.props 
        const { email , password }  =this.state
        
-      Login({email , password} ) 
+      Login({email , password , 
+        navigateToHome:this.navigateToHome ,
+         OnLoader:this.OnLoader ,
+          ResetState:this.ResetState, 
+          OnLoaderOff: this.OnLoaderOff} ) 
        }
 
 
@@ -57,7 +73,7 @@ const initialState = {
     const { token , error  } = this.props
     
     const { email , password , isLoading }  = this.state 
-    
+
     return(
       <View style = {{
         flex:1 , 
@@ -66,56 +82,7 @@ const initialState = {
                 <NavigationEvents
                onDidBlur={() => this.setState(({...initialState}))} />       
              
-                  {/* {isLoading ?  <Spinner color = "red" size = {25}/>:  
-                 <View> */}
-                  {/* <Image
-                              source = {require("../assets/fastening.png")}
-                              style = {{
-                                height:135,
-                                width:"100%",
-                                resizeMode:"contain"
-                              }}/>
-                      
-                      
-                       <ScrollView 
-                       contentContainerStyle  = {{  justifyContent:"center" }}
-                       showsVerticalScrollIndicator = { false }
-                       >
-                         <View>
-                         { error.message ? <Text>{error.message}</Text> : null }
-                         </View>
-                         
-                         
-                          <Input
-                          label = "EMAIL"
-                          placeHolderText="john22@gmail.com"
-                          isSecureTextEntry = { false}
-                          onChangeText= { this.handleInputChange} 
-                          errorName = "email" 
-                          value = {email }
-                          />
-
-                            <Input
-                          label = "PASSWORD"
-                          placeHolderText="*******"
-                          isSecureTextEntry = { true }
-                          onChangeText= { this.handleInputChange}
-                          errorName = "password" 
-                          value = {password}
-                          />  
-                          <Button 
-                          onPressMethod = { this.handleLogin}
-                          text = "Login"
-                          buttonStyle = {disable ? enable_Button_Style : disable_Button_Style}
-                          textStyle = { disable ? enable_Text_Style  :disable_Text_Style }
-                          disable = { disable}
-                          />
-                         <View style = {{ height:200 , width:"100%"}}></View> 
-                          <View style = {{ height:150  , width:"100%"}}> </View>  
-                      
-                        </ScrollView>   
-                        */}
-                        { isLoading ? <Spinner color = "red" size = {25} />: <ScrollView>
+                        { isLoading ? <Spinner color = "red" size = {25} />: <ScrollView keyboardShouldPersistTaps='always'>
                         <Image
                               source = {require("../assets/fastening.png")}
                               style = {{
@@ -123,7 +90,7 @@ const initialState = {
                                 width:"100%",
                                 resizeMode:"contain"
                               }}/>
-                          {error.message ?  <Text>{error.message}</Text>  : null }
+                          {error ?  <Text> User with these credentials does {error}</Text>  : null }
                         <Input
                           label = "EMAIL"
                           placeHolderText="john22@gmail.com"
@@ -167,7 +134,7 @@ const mapDispatchToProps = ( dispatch ) => {
 }
 
 const mapStateToProps = ( state ) => {
-  console.log("state of redux" , state )
+
   return({
     token: state.tokenReducer.token,
     error: state.ErrorReducer.error.message

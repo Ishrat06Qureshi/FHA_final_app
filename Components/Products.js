@@ -22,9 +22,9 @@ import ProductModal from "./ProductModal"
   }
  
   render() {
-     const  { productCode , description  } = this.props
+     const  { productCode , description , uri } = this.props
      const { isModalVisible } = this.state
-        
+
     return ( 
        <View>
          <Card>
@@ -32,7 +32,7 @@ import ProductModal from "./ProductModal"
              <CardItem>
                
                                   <Image  
-                    source={  {uri:"https://i.pinimg.com/736x/95/06/09/95060928183afad6de380ab328701731.jpg"} }
+                    source={  uri ? {uri} : "https://previews.123rf.com/images/yupiramos/yupiramos1708/yupiramos170812336/83821481-page-not-found-404-error-vector-icon-illustration-design-graphic.jpg" }
                     style={ Image_styles} 
                    />
                    <View style ={{ flexDirection:"column" , paddingLeft:10}}>
@@ -51,8 +51,8 @@ import ProductModal from "./ProductModal"
                    <Modal isVisible = { isModalVisible}>
                      <View style = {{ flex:1}}>
                        
-                    <ProductModal
-                     image= "https://i.pinimg.com/736x/95/06/09/95060928183afad6de380ab328701731.jpg"
+                    <ProductModal 
+                     image= { uri  ? uri : "https://previews.123rf.com/images/yupiramos/yupiramos1708/yupiramos170812336/83821481-page-not-found-404-error-vector-icon-illustration-design-graphic.jpg"}
                      productCode = {productCode}
                      closeModal = {this.closeModal}
                     />
