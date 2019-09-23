@@ -1,5 +1,9 @@
 
-import { createStackNavigator , createAppContainer , createBottomTabNavigator  } from "react-navigation";
+import { createStackNavigator ,
+   createAppContainer ,
+    createBottomTabNavigator,
+   createSwitchNavigator,
+   createDrawerNavigator  } from "react-navigation";
 
 
 
@@ -16,6 +20,10 @@ import MultiForm from "../Components/multistepForm";
 import Signup from "../Components/NewSignUp"
 import OrderPlacement from "../Components/OrderPlacement"
 import  CodeVerify from "../Components/CodeVerification"
+import Profile from "../Components/Profile"
+import EditProfile from "../Components/EditProfile";
+import Order from "../Components/Order"
+import Sidedrawer from "./DrawerNavigator"
 
 
 
@@ -95,8 +103,25 @@ const AppStackNavigator = createStackNavigator({
   CodeVerify:{
     screen:CodeVerify,
     navigationOptions: {
-     header: null}
+     header: null},
+     
+  },
+  Profile:{
+    screen:Profile,
+    navigationOptions: {
+     header: null},
+  },
+  EditProfile:{
+    screen:EditProfile,
+    navigationOptions: {
+     header: null},
+  },
+  Order:{
+    screen:Order,
+    navigationOptions: {
+     header: null},
   }
+
  
     
 } , 
@@ -107,6 +132,46 @@ defaultNavigationOptions: {
 }
 })
 
+
+// const WelcomeStack = createStackNavigator({
+//   Welcome:{
+//     screen:Welcome,
+//     navigationOptions: {
+//       header: null}
+//   },
+//   NewLogin:{
+//     screen:Finalogin,
+//     navigationOptions: {
+//       header: null}
+//   },
+//     Finalsignup:{
+//     screen:Finalsignup,
+//     navigationOptions: {
+//       header: null}
+//   },
+//   CodeVerify:{
+//     screen:CodeVerify,
+//     navigationOptions: {
+//      header: null},
+     
+//   },
+// })
+
+
+// const AppSwitchNavigator = createSwitchNavigator({
+//   Splash:{
+//     screen:Splash,
+//     navigationOptions: {
+//       header: null}
+//     },
+//     WelcomeStack,
+//     Home:{
+//       screen: TabBar
+//     },
+
+    
+
+// })
 const AppContainer = createAppContainer( AppStackNavigator)
 
 export default AppContainer

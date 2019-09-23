@@ -6,7 +6,8 @@ import Home from "../Components/newHome";
 import Order from "../Components/Order";
 import Logout from "../Components/Logout";
 import Search from "../Components/Search";
-import Cart from "../Components/Cart"
+import Cart from "../Components/Cart";
+import EditProfile from "../Components/EditProfile"
 
 const TabBar = createBottomTabNavigator(
     {
@@ -40,4 +41,4 @@ const TabBar = createBottomTabNavigator(
   }
   )
 
-  export default TabBar 
+  export default  TabBar

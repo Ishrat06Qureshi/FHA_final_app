@@ -12,7 +12,7 @@ const  resetValidators = () => {
   
 
   const updateValidators = (fieldName, value) => {
-    
+    // console.log("in the update Validators ",fieldName)
     validators[fieldName].errors = [];
     validators[fieldName].state = value;
     validators[fieldName].valid = true;
@@ -44,7 +44,7 @@ const  resetValidators = () => {
   }
 
  const  isFormValid = ( fieldNames  ) => {
-  
+    
     let status = true;
     Object.keys(validators).forEach((field) => {
 

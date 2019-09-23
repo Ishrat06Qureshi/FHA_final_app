@@ -1,15 +1,14 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, ImageBackground , Image  , TextInput , TouchableOpacity  , KeyboardAvoidingView} from 'react-native';
+import { ScrollView,
+  View, KeyboardAvoidingView} from 'react-native';
 import axios from "axios";
-import { AntDesign , FontAwesome  , EvilIcons} from "@expo/vector-icons"
-import { Spinner } from "native-base"
+
 import validation_functions from "../utils/validation_functions";
-import URL  from "../urls";
-import  Input from "./Input";
-import Button from "./Button";
+
 import Company from "./Company";
 import Customer from "./Customer";
 import Address  from "./AddressComponent"
+import { Spinner } from "native-base"
 import { NavigationEvents } from 'react-navigation';
 
 const initialState = {
@@ -34,22 +33,12 @@ export default class Finalsignup extends React.Component {
 
   state = {...initialState}
 
-  
-  
- 
 
  handleInputChange = ( fieldName , value) => {
   this.setState(({ [fieldName] : value}))
   validation_functions.updateValidators( fieldName , value )
 
 }
-
-navigateToLogin = () => {
-  console.log("navigation")
-    this.props.navigation.navigate("Finalogin")
-  }
-  
-
   post = () => {
     const {    email,
       customerNumber,
@@ -58,28 +47,41 @@ navigateToLogin = () => {
       officeAddress,
       contactPersonName,
       phoneNumber , lineOne , lineTwo , city, province , postalCode } = this.state
-   
-    axios.post("http://13.59.64.244:3000/api/register" , 
-    { email , customerNumber , password , companyName , officeAddress:`${lineOne} , ${city} , ${province} , ${postalCode}`  , 
-    contactPersonName , phoneNumber  })
-    .then(( response ) =>  
-    {  console.log(response)
-      if(response.data.message === "Done") {
-        this.props.navigation.navigate("CodeVerify")
-      }
+     this.setState(({ isLoading: true , StepOne:true , }) , () =>
+
+     {
+      axios.post("http://13.59.64.244:3000/api/register" , 
+      { email , customerNumber , password , companyName , officeAddress:`${lineOne} , ${city} , ${province} , ${postalCode}`  , 
+      contactPersonName , phoneNumber  })
+      .then(( response ) =>  
+      {  console.log(response)
+        if(response.data.message === "Done") {
+          validation_functions.resetValidators()
+          this.props.navigation.navigate("CodeVerify")
+        }
+      } )
+       .catch ( err =>
+        {
+          validation_functions.resetValidators()
+          return( this.setState(({
+            isLoading: false , 
+            serverError: err.response.data.message ,
+            email:"",
+            customerNumber:"",
+            password:"",
+            companyName:"",
+            officeAddress:"",
+            contactPersonName:"",
+            phoneNumber:"",
+            lineOne:"",
+            lineTwo:"",
+            city:"",
+            province:"",
+            postalCode:""})) )
+        })
+     })
+     
     }
-    )
-     .catch ( err => this.setState(({ 
-       serverError:err.response.data.message})))
-    
-  }
-
-
-  handleSignup = () => {
-    console.log( "press")
-    this.post()
-    
-  }
   
   JumpStepTwo = () => {
     this.setState(({ StepOne:false})) 
@@ -105,25 +107,36 @@ navigateToLogin = () => {
     lineTwo,
     city,
     province,
-    postalCode, } = this.state
+    postalCode,
+   serverError , isLoading } = this.state
      
     return(
-      <View style ={{  flex:1}}>   
+      <View>   
 
 <NavigationEvents
       onDidBlur={() => this.setState(({...initialState}))}
       />
-      
+          
           { StepOne ? 
+          <ScrollView contentContainerStyle = {{ justifyContent:"center"}}
+           showsVerticalScrollIndicator=  { false}>
           <Customer
           handleInputChange = { this.handleInputChange}
           handleNext = { this.JumpStepTwo}
           customerNumber = {customerNumber}
           email = { email }
           password = { password }
-
-          />:  StepTwo ? 
+          serverError = { serverError}
+          isLoading = { isLoading }
+          />
           
+           <View style = {{ height:150 , width:"100%"}}></View> 
+         
+           </ScrollView>
+          :  StepTwo ? 
+            <ScrollView contentContainerStyle = {{ justifyContent:"center"}}
+             showsVerticalScrollIndicator = { false}>
+              
           <Company
           handleInputChange = { this.handleInputChange}
           handleNext = { this.JumpStepThree}
@@ -131,7 +144,14 @@ navigateToLogin = () => {
           contactPersonName = {contactPersonName}
           phoneNumber ={ phoneNumber}
 
-          /> : <Address
+          />
+           <View style = {{ height:150 , width:"100%"}}></View> 
+   
+          </ScrollView> : 
+          <ScrollView contentContainerStyle = {{ justifyContent:"center"}} 
+          showsVerticalScrollIndicator = {false} >
+            
+          <Address
           handleInputChange = {this.handleInputChange}
           handleNext = {this.post}
           lineOne = { lineOne }
@@ -139,12 +159,11 @@ navigateToLogin = () => {
           province = { province }
           postalCode = { postalCode }
           />
-          
+           <View style = {{ height:180 , width:"100%"}}></View> 
+           <View style = {{ height:50 , width:"100%"}}></View> 
+          </ScrollView>
              }
-             {/* <Customer
-              handleInputChange = { this.handleInputChange}
-              handleNext = { this.JumpStepTwo}
-             /> */}
+            
       
         </View> 
     

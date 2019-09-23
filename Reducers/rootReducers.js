@@ -4,7 +4,7 @@ import loadingReducer from "./LoadingReducer";
 import UserDataReducer from "./userDataReducer";
 import tokenReducer  from "./tokenReducer";
 import orderReducer  from "./OrderReducer"
-import ErrorReducer from "./ErrorReducer"
+import ErrorReducer from "./errorReducer"
  const rootReducer = combineReducers ({
      loadingReducer,
      UserDataReducer,

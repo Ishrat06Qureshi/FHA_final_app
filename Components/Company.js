@@ -1,5 +1,5 @@
 import React , { Component } from "react";
-import { View  , Image } from "react-native";
+import { View  , Image , ScrollView } from "react-native";
 
 import  Input from "./Input";
 import Button from "./Button";
@@ -36,7 +36,9 @@ const Company = (  props ) => {
                   }}
                 />
              
-               <View style = {{  justifyContent:"center" }}>
+               <ScrollView contentContainerStyle = {{  justifyContent:"center" }}
+               showsVerticalScrollIndicator = { false}
+               >
                <Input
                label = "COMPANY NAME"
                placeHolderText="fastening housing atlantic"
@@ -67,12 +69,36 @@ const Company = (  props ) => {
                />  
               <Button 
                onPressMethod = {handleNext}
-               text = "Submit"
+               text = "Next"
                buttonStyle = {disable ? enable_Button_Style : disable_Button_Style}
                textStyle = { disable ? enable_Text_Style  :disable_Text_Style}
                disable = { disable }
                />
-               </View>
+                 {/* <View style = {{ height:200 , width:"100%"}}>
+
+                </View> 
+                <View style = {{ height:200 , width:"100%"}}>
+
+               </View>  */}
+               {/* <View style = {{ height:150 , width:"100%"}}>
+
+              </View>  */}
+              {/* <View style = {{ height:150 , width:"100%"}}>
+
+</View> 
+<View style = {{ height:150 , width:"100%"}}>
+
+</View> 
+<View style = {{ height:150 , width:"100%"}}>
+
+</View> 
+<View style = {{ height:150 , width:"100%"}}>
+
+</View> 
+<View style = {{ height:150 , width:"100%"}}>
+
+</View>  */}
+               </ScrollView>
                             
             </View>
               

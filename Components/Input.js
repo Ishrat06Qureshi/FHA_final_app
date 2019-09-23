@@ -14,7 +14,7 @@ const Input = ( props ) => {
            defaultAnswer ,
             edit , 
         value} = props
-        
+       
    return( <View style = {{ alignContent:"center"}}>
           <Text style = { label_styles}>
               {label}

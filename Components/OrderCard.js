@@ -1,23 +1,24 @@
 import React , {  Component } from "react";
-import { Card, CardItem, View} from "native-base";
-import { Text } from "react-native"
+import { Card, CardItem} from "native-base";
+import { Text  , View, FlatList , Animated } from "react-native"
 import { bold_Text} from "../Styles";
 import OrderHeading from "./orderHeading";
 import OrderDetails from "./OrderDetails";
 import Modal from "react-native-modal";
+import CustomHorizontalText from "./CustomHorizontalText"
 import  { 
  
     Entypo,
     AntDesign,
+    MaterialIcons
   
 } from "@expo/vector-icons"
 
-onPress = () => {
-    console.log("pressed")
-}
 export default class  OrderCard extends Component   {
     state = {
-        isModalVisible: false
+        viewMore : false,
+        animation   : new Animated.Value(),
+        expanded    : true,
       };
 
     closeModal = () => {
@@ -28,80 +29,134 @@ export default class  OrderCard extends Component   {
         this.setState(({ isModalVisible:true}))
        
       }
+      _renderItem = ({item }) => {
+        const { orderDetails } = this.props 
+      return(<View>
+          <Text style = {{ paddingLeft:25}}>{item.description}</Text>
+                    <View style = { { paddingLeft:25}}>
+                        <CustomHorizontalText
+                        label = "Product Code"
+                        text = {item.productCode}
+                        />
+                         <CustomHorizontalText
+                        label = "Unit of Measure"
+                        text = "foot"
+                        />
+                          <CustomHorizontalText
+                        label = "Quantity"
+                        text = {orderDetails.productDetail.find( product => product.productID === item.id ).quantity}
+                        />
+                    </View>
+      </View>)
+    }
+    _setMaxHeight(event){
+        this.setState({
+            maxHeight   : event.nativeEvent.layout.height
+        });
+    }
+    
+    _setMinHeight(event){
+        this.setState({
+            minHeight   : event.nativeEvent.layout.height
+        });
+    }
+
+    toggle(){
+        console.log(this.state)
+        
+        let initialValue    = this.state.expanded? this.state.maxHeight + this.state.minHeight : this.state.minHeight,
+            finalValue      = this.state.expanded? this.state.minHeight : this.state.maxHeight + this.state.minHeight;
+    
+        this.setState({
+            expanded : !this.state.expanded  //Step 2
+        });
+    
+        this.state.animation.setValue(initialValue);  //Step 3
+        Animated.spring(     //Step 4
+            this.state.animation,
+            {
+                toValue: finalValue
+            }
+        ).start();  //Step 5
+    }
+
+
+
+    
     render() {
         const { 
-            productCode ,
-            productDescription, 
-            dateOfOrder, 
+            // productCode ,
+            // productDescription, 
+            createdDate, 
             shippingAddress ,
-            quantity,
+            // quantity,
             poNumber, 
-
-           } = this.props
-          const { isModalVisible } = this.state
-          return( <View>
-            <Card style = {{ borderRadius:15 , height:200}}>
             
-            <View style = {{ flexDirection:"column" }}>
-                <OrderHeading
-                 poNumber  = { poNumber}
-                 onPressMethod = { this.openModal }
-                 label = "view details"
-                />
-                <View style ={{ flexDirection:"row" , paddingLeft:10}}>
-                <AntDesign
-                name="barcode"
-                size = {20} 
-                color = "orange"
-                />
-                <View>
-                    
-               
-                <Text style = {{ ...bold_Text , paddingLeft:10}}>product Code</Text>
-               <Text style = {{ paddingLeft:15}}>{productCode}</Text>
-               </View>
-                </View>
-                
-                <View style = {{ flexDirection:"row" , paddingLeft:10}}>
-                <Entypo
-                                name = "address" 
+           } = this.props.orderDetails
+          const { isModalVisible , expanded } = this.state
+          return( 
+              <Animated.View style = { this.state.animation}>
+                  
+              <View onLayout={this._setMinHeight.bind(this)}>
+                  
+                <Card style = {{ borderRadius:15 , height:150}} onLayout={this._setMaxHeight.bind(this)}>
+            
+                            <View style = {{ flexDirection:"column" }}>
+                                <OrderHeading
+                                poNumber  = { poNumber}
+                                onPressMethod = { this.toggle.bind(this) }
+                                label = { expanded ? "View less" : "View more"}
+                                />
+                                <View style ={{ flexDirection:"row" , paddingLeft:10}}>
+                                <MaterialIcons
+                                name="date-range"
                                 size = {20} 
-                                color = "orange"/>
-                 <View>
-                                 
-                <Text style = {{ ...bold_Text , paddingLeft:10} } numberOfLines= {0.5}>shipping Address</Text>
-               <Text style = {{ paddingLeft:15}}>{shippingAddress}</Text>
-               </View> 
-               </View>
-                
-            </View>
+                                color = "orange"
+                                />
+                                <View>
+                                    
+                            
+                                <Text style = {{ ...bold_Text , paddingLeft:10}}> Date Of Order </Text>
+                            <Text style = {{ paddingLeft:15}}>{createdDate}</Text>
+                            </View>
+                                </View>
+                                
+                                <View style = {{ flexDirection:"row" , paddingLeft:10}}>
+                                        <Entypo
+                                                        name = "address" 
+                                                        size = {20} 
+                                                        color = "orange"/>
+                                            <View>
+                                                            
+                                                        <Text style = {{ ...bold_Text , paddingLeft:10} }>Shipping Address</Text>
+                                                        <Text style = {{ paddingLeft:15}} numberOfLines= {0.5}>{shippingAddress}</Text>
+                                        </View> 
+                            </View>
+
+                            <View style = {{ flexDirection:"row" , paddingLeft:10}}>
+                                        <AntDesign
+                                                        name = "shoppingcart" 
+                                                        size = {20} 
+                                                        color = "orange"/>
+                                            <View>
+                                                            
+                                                        <Text style = {{ ...bold_Text , paddingLeft:10} } >Items </Text>
+                                                        
+                                        </View> 
+                            </View>
+                                <FlatList
+                                data = { this.props.orderDetails.Product}
+                                renderItem = { this._renderItem}
+                                />
+                            
+                            
+                            </View>
             </Card>
 
-            {
-                 isModalVisible ? 
-                 <View style = {{ flex:1}}>
-                 <Modal isVisible={ isModalVisible }>
-                     <OrderDetails
-                        closeModal = { this.closeModal}
-                        shippingAddress  = { shippingAddress}
-                        dateOfOrder = { dateOfOrder}
-                        poNumber = { poNumber}
-                        productCode = {productCode}
-                        quantity = {quantity}
-                        UOM = "foot"
-                     />
-                         
-                         
-                         
-                         
-                         
-                     
-                 </Modal>
-                 </View>: null
-             }
+</View>     
            
-           
-        </View>)
+</Animated.View>
+        )
 
     }
 

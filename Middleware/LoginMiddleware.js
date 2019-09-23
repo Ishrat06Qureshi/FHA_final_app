@@ -1,8 +1,8 @@
 import TokenAction from "../Actions/tokenAction";
 import UserDataAction from "../Actions/UserDataAction";
-import SaveError from "../Actions/ErrorAction";
+import SaveError from "../Actions/errorAction";
 import axios from "axios";
-
+import { NavigationActions } from 'react-navigation';
 
 
 
@@ -15,6 +15,7 @@ const LoginMiddleware = ( data ) => {
                         {   
                             dispatch( TokenAction.TOKEN_SAVE_ACTION(response.data.token))
                             dispatch( UserDataAction.SAVE_USER_DATA_ACTION( response.data))
+                            dispatch(NavigationActions.navigate({ routeName: 'Home' }))
                         }).catch ( err => {
                             console.log( err.response.data.message)
                             dispatch( SaveError( {message:err.response.data.message}))
