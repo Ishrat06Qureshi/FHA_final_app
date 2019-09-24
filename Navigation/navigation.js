@@ -46,91 +46,91 @@ const handleCustomTransition = ({ scenes }) => {
   return fromRight(500);
 }
 
-const AppStackNavigator = createStackNavigator({
+// const AppStackNavigator = createStackNavigator({
  
-    Splash:{
-      screen:Splash,
-      navigationOptions: {
-        header: null},
+//     Splash:{
+//       screen:Splash,
+//       navigationOptions: {
+//         header: null},
       
-      },
-      Welcome:{
-      screen:Welcome,
-      navigationOptions: {
-        header: null}
-    },
-    NewLogin:{
-      screen:Finalogin,
-      navigationOptions: {
-        header: null}
-    },
-      Finalsignup:{
-      screen:Finalsignup,
-      navigationOptions: {
-        header: null}
-    },
-    Home:{
-      screen: TabBar
-    },
-    PlacementDetails : {
-      screen: PlacementDetails,
-      navigationOptions: {
-      header: null} ,
-    } , 
-   Modal:{
-     screen:Modal,
-     navigationOptions: {
-      header: null}
+//       },
+//       Welcome:{
+//       screen:Welcome,
+//       navigationOptions: {
+//         header: null}
+//     },
+//     NewLogin:{
+//       screen:Finalogin,
+//       navigationOptions: {
+//         header: null}
+//     },
+//       Finalsignup:{
+//       screen:Finalsignup,
+//       navigationOptions: {
+//         header: null}
+//     },
+//     Home:{
+//       screen: TabBar
+//     },
+//     PlacementDetails : {
+      // screen: PlacementDetails,
+      // navigationOptions: {
+      // header: null} ,
+//     } , 
+//    Modal:{
+//      screen:Modal,
+//      navigationOptions: {
+//       header: null}
 
-   }, 
-   AllProducts:{
-    screen:AllProducts,
-    navigationOptions: {
-     header: null}
+//    }, 
+//    AllProducts:{
+//     screen:AllProducts,
+//     navigationOptions: {
+//      header: null}
 
-  }, 
-  MultiForm:{
-    screen:Finalsignup,
-    navigationOptions: {
-     header: null}
+//   }, 
+//   MultiForm:{
+//     screen:Finalsignup,
+//     navigationOptions: {
+//      header: null}
 
-  },
-  OrderPlacement:{
-    screen:OrderPlacement,
-    navigationOptions: {
-     header: null}
-  },
-  CodeVerify:{
-    screen:CodeVerify,
-    navigationOptions: {
-     header: null},
+//   },
+//   OrderPlacement:{
+//     screen:OrderPlacement,
+//     navigationOptions: {
+//      header: null}
+//   },
+//   CodeVerify:{
+//     screen:CodeVerify,
+//     navigationOptions: {
+//      header: null},
      
-  },
-  Profile:{
-    screen:Profile,
-    navigationOptions: {
-     header: null},
-  },
-  EditProfile:{
-    screen:EditProfile,
-    navigationOptions: {
-     header: null},
-  },
-  Order:{
-    screen:Order,
-    navigationOptions: {
-     header: null},
-  }
+//   },
+//   Profile:{
+//     screen:Profile,
+//     navigationOptions: {
+//      header: null},
+//   },
+//   EditProfile:{
+//     screen:EditProfile,
+//     navigationOptions: {
+//      header: null},
+//   },
+//   Order:{
+//     screen:Order,
+//     navigationOptions: {
+//      header: null},
+//   }
 
  
     
-} , 
-{ initialRouteName:"NewLogin",
-  transitionConfig:(nav) => handleCustomTransition(nav),
-defaultNavigationOptions: {
-    header: null
-}
-})
+// } , 
+// { initialRouteName:"NewLogin",
+//   transitionConfig:(nav) => handleCustomTransition(nav),
+// defaultNavigationOptions: {
+//     header: null
+// }
+// })
 
 
 // const WelcomeStack = createStackNavigator({
@@ -158,20 +158,20 @@ defaultNavigationOptions: {
 // })
 
 
-// const AppSwitchNavigator = createSwitchNavigator({
-//   Splash:{
-//     screen:Splash,
-//     navigationOptions: {
-//       header: null}
-//     },
-//     WelcomeStack,
-//     Home:{
-//       screen: TabBar
-//     },
+const AppSwitchNavigator = createSwitchNavigator({
+  // Splash:{
+  //   screen:Splash,
+  //   navigationOptions: {
+  //     header: null}
+  //   },
+  //   WelcomeStack,
+    Home:{
+      screen: TabBar
+    },
 
     
 
-// })
-const AppContainer = createAppContainer( AppStackNavigator)
+})
+const AppContainer = createAppContainer( AppSwitchNavigator)
 
 export default AppContainer

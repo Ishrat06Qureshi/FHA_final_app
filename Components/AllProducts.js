@@ -37,12 +37,14 @@ export default class AllProducts extends Component {
     fetchData = () => {
         const { skippedProducts } = this.state
         const { productName }=  this.props.navigation.state.params
-        console.log( skippedProducts)
-        axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=5skip=${skippedProducts}&search=${productName}`).
+        console.log("skipped products before add", skippedProducts)
+        axios.get(`http://13.59.64.244:3000/api/products?noOfRecords=10&skip=${skippedProducts}&search=${productName}`).
         then(( response)  =>  this.setState( ( preState ) => {
-          console.log( preState.data.length)
+          console.log( "data length",response.data.length)
+          console.log( response.data.length?  response.data.length  : "null")
           return({
-            data:skippedProducts === 0 ? Array.from(response.data) : response.data.length? [...preState.data , ...response.data ]  :[...preState.data],
+            data:skippedProducts === 0 ? Array.from(response.data) :
+             response.data.length? [...preState.data , ...response.data ]  :[...preState.data],
             isLoading : false
           })
         })).catch ( err=> this.setState(({ serverError:err , isLoading:false })))
@@ -56,6 +58,7 @@ export default class AllProducts extends Component {
             loadingMore: true
           }),
           () => {
+            console.log("skipped products after adding 10" , this.state.skippedProducts)
             this.fetchData();
           }
         );
