@@ -1,5 +1,5 @@
 import React , { Component } from "react";
- import { View , Text  , FlatList , ScrollView  } from "react-native";
+ import { View , Text  , FlatList , ScrollView ,  TouchableOpacity } from "react-native";
  import Company from "./Company";
 import Customer from "./Customer";
 import Address  from "./AddressComponent"
@@ -62,7 +62,7 @@ import { disable_Button_Style ,
         
           contactPersonName,
           phoneNumber , lineOne ,  city, province , postalCode} = this.state
-        // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDg0OGZhM2VkNjdhZjdlMDc4ZGI5ZWEiLCJpYXQiOjE1NjkwNzkxNDQsImV4cCI6MTU2OTA4MDM0NH0.2HloKaZ9IklrI012rPzksvbdGcnrQlD31m_oL74O6XU"
+        
         axios.put(`http://13.59.64.244:3000/api/user/edit/${userData.userID}`, {
           email , customerNumber , companyName , officeAddress:`${lineOne} , ${city} , ${province} , ${postalCode}`  , 
           contactPersonName , phoneNumber
@@ -75,16 +75,13 @@ import { disable_Button_Style ,
       const { 
         email,
       customerNumber,
-     
       companyName,
-     
       contactPersonName,
       phoneNumber,
       lineOne,
-      lineTwo,
       city,
       province,
-      postalCode, } = this.state
+      postalCode, } = this.props
       
       const disable = validation_functions.isFormValid(checkFields)
       
@@ -92,11 +89,15 @@ import { disable_Button_Style ,
          return( <View style ={{  flex:1 , 
           justifyContent:"center" ,
           alignItems:"center"}}>   
-
+            <View>
+              <TouchableOpacity onPress = {() => this.props.navigation.navigate("Profile")}>
+                <Text> Back </Text>
+              </TouchableOpacity>
+            </View>
             <NavigationEvents
                   onDidBlur={() => this.setState(({...initialState}))}
                   />
-                  
+                        
                       
                          <ScrollView
                           contentContainerStyle = {{justifyContent:"center" , marginTop:25}}
@@ -235,7 +236,7 @@ import { disable_Button_Style ,
    console.log( state )
    return({
     token: state.tokenReducer.token,
-    userData:state.UserDataReducer.UserData
+    UserData:state.UserDataReducer.UserData
    })
    
 

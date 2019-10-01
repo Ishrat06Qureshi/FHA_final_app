@@ -133,38 +133,38 @@ const handleCustomTransition = ({ scenes }) => {
 // })
 
 
-// const WelcomeStack = createStackNavigator({
-//   Welcome:{
-//     screen:Welcome,
-//     navigationOptions: {
-//       header: null}
-//   },
-//   NewLogin:{
-//     screen:Finalogin,
-//     navigationOptions: {
-//       header: null}
-//   },
-//     Finalsignup:{
-//     screen:Finalsignup,
-//     navigationOptions: {
-//       header: null}
-//   },
-//   CodeVerify:{
-//     screen:CodeVerify,
-//     navigationOptions: {
-//      header: null},
+const WelcomeStack = createStackNavigator({
+  Welcome:{
+    screen:Welcome,
+    navigationOptions: {
+      header: null}
+  },
+  NewLogin:{
+    screen:Finalogin,
+    navigationOptions: {
+      header: null}
+  },
+    Finalsignup:{
+    screen:Finalsignup,
+    navigationOptions: {
+      header: null}
+  },
+  CodeVerify:{
+    screen:CodeVerify,
+    navigationOptions: {
+     header: null},
      
-//   },
-// })
+  },
+})
 
 
 const AppSwitchNavigator = createSwitchNavigator({
-  // Splash:{
-  //   screen:Splash,
-  //   navigationOptions: {
-  //     header: null}
-  //   },
-  //   WelcomeStack,
+  Splash:{
+    screen:Splash,
+    navigationOptions: {
+      header: null}
+    },
+    WelcomeStack,
     Home:{
       screen: TabBar
     },

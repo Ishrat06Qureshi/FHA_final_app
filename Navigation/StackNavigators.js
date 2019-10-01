@@ -3,7 +3,8 @@ import { createStackNavigator} from "react-navigation"
 import Home from "../Components/newHome";
 import AllProducts from "../Components/AllProducts";
 import Profile from "../Components/Profile";
-import EditProfile from "../Components/EditProfile"
+import EditProfile from "../Components/EditProfile";
+import ProfileGrid from "../Components/ProfileGrid"
 
 export const HomeStack = createStackNavigator({
     Home : {
@@ -31,8 +32,13 @@ const ProfileViewStack = createStackNavigator({
     }
 })
 export const ProfileStack = createStackNavigator({
-    Profile:{
-        screen:ProfileViewStack,
+    ProfileGrid:{
+        screen:ProfileGrid,
+        navigationOptions: {
+            header: null} ,
+    },
+    ProfileStack : {
+        screen: ProfileViewStack ,
         navigationOptions: {
             header: null} ,
     }

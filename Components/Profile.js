@@ -1,55 +1,63 @@
 import React , { Component } from "react";
 import { View , Text , ScrollView  , TouchableOpacity } from "react-native";
-import {Ionicons , 
-    MaterialCommunityIcons,
-    Feather} from "@expo/vector-icons";
-import {  Heading_style , bold_Text } from "../Styles";
-import CustomText from "./CustomText"
- 
+import {Entypo} from "@expo/vector-icons";
+import {   Profile_Heading  } from "../Styles";
+import CustomGreyText from "./CustomGreyText"
+import { connect } from "react-redux";
 
 
 class Profile extends Component {
     
    render() {
+      const { UserData } = this.props
        return( <View>
-            <View >
-                <Feather  name="user"  size = {35 }  color = "orange" style  = {{justifyContent:"center" , 
-                alignSelf:"center" , marginTop:15  }}/>
-                <TouchableOpacity onPress = { () => this.props.navigation.navigate("EditProfile")}>
-                <MaterialCommunityIcons  name="pencil-circle-outline"  size = {35 }  color = "orange" style  = {{justifyContent:"center" , 
-                alignSelf:"center" , marginTop:15  }}/>
-                </TouchableOpacity>
-                
-                
-                <View style = {{ justifyContent:"center" , alignSelf:"center" , marginTop:20 , marginBottom:25}}>
-            <Text style = { bold_Text }> A.B Mechanical Company </Text>
-            </View>
+            <View>  
+               
+                <View style = {{ marginTop:20 , marginBottom:25 , flexDirection:"row"  , justifyContent:"space-evenly"}}>
+                   <Text style = { Profile_Heading }> {UserData.companyName.toUpperCase()} </Text>
+                   <TouchableOpacity onPress = { () => this.props.navigation.navigate("EditProfile")}>
+                   <Entypo name="pencil" size = {30} color = "#828282" style = {{ marginTop:5}}/>
+                   </TouchableOpacity>
+                 
+                 
+                 </View>
+                 
+                   
+                 
+      
             <ScrollView>
                 
-             <CustomText
+             <CustomGreyText
                 label = "Customer Number"
-                text = { 12456}
+                text = {UserData.customerNumber}
              />
-              <CustomText
+              <CustomGreyText
                 label = "Contact Person Name"
-                text = "Dev"
+                text = {UserData.contactPersonName}
              />
-              <CustomText
+              <CustomGreyText
                 label = "Email"
-                text = "dev@gmail.com"
+                text = {UserData.email}
              />
-              <CustomText
+              <CustomGreyText
                 label = "Office Address"
-                text = "1 Moore Rd, Dartmouth, NS B3B 1J1, Canada"
+                text = {UserData.officeAddress}
              />
-              <CustomText
+              <CustomGreyText
                 label = "Phone Number"
-                text = "0123456789"
+                text = {UserData.phoneNumber}
              />
+              
+             
 
               </ScrollView>
                  </View>
        </View>)
    }
 }
-export default Profile
+const mapStateToProps = ( state ) => {
+   console.log( state )
+ return({
+   UserData: state.UserDataReducer.UserData })
+}
+export default connect( mapStateToProps , null )(Profile)

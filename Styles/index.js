@@ -1,8 +1,10 @@
 import {  Dimensions } from "react-native";
 import Primary_Color from "./colors";
 const Height  = Dimensions.get("window").height
-const red = "#DA011D"
-const white = "white"
+ export const red = "#DA011D"
+export const white = "white"
+ 
+
 
 const cylinderButton = {
       height:50 , 
@@ -152,4 +154,40 @@ export const Image_styles = {
     height:"80%",
     width: "25%",
    resizeMode: 'contain',
+}
+
+
+export const Square_card = {
+    height:120,
+    width:120,
+    borderColor:"#DA011D",
+    borderWidth:1,
+    borderRadius:5,
+    backgroundColor:"#DA011D"
+}
+
+export const Profile_Heading = {
+    ...bold_Text,
+    color:red,
+    fontSize:25
+
+}
+
+export const grey_Custom_text = {
+    ...bold_Text,
+    color:"#363636",
+    paddingLeft:25
+}
+
+export const box_Shadow = {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 1,
+        width: 100,
+        height: 100,
+        borderRadius: 100/2,
+        backgroundColor: '#000'
+
 }

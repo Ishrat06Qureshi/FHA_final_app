@@ -56,9 +56,7 @@ const  initialState = {
         
        
         return( <View >
-             <NavigationEvents
-      onDidBlur={() => this.setState(({...initialState}))}
-      />
+             
                <Card style = {{ height: 500, borderRadius:25}}>
                    
                <Image

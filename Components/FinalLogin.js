@@ -134,7 +134,7 @@ const mapDispatchToProps = ( dispatch ) => {
 }
 
 const mapStateToProps = ( state ) => {
-
+    console.log( state )
   return({
     token: state.tokenReducer.token,
     error: state.ErrorReducer.error.message

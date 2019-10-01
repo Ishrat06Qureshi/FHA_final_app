@@ -48,8 +48,8 @@ class Cart extends Component {
         if ( response.status === 200) {
           DeleteItem()
           Alert.alert(
-            'Alert Title',
-            'My Alert Msg',
+            'Order confirmation',
+            'FHA will shortly contact you',
             [
               
               
